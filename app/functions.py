@@ -5,12 +5,14 @@ from app.classes import Recipe, User
 from tkinter import messagebox
 from PIL import Image
 import customtkinter as ctk
-from app.windows.login.config import theme
+from app.config import theme
 import socket
 import json
 import datetime
 import base64
 import io
+
+from app.models.main import User
 
 SERVER_HOST = "127.0.0.1"
 SERVER_PORT = 65432

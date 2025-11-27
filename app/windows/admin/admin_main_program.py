@@ -1,7 +1,9 @@
 import customtkinter as ctk
+
 from app.windows.admin.admin_frames import MainFrame
 from app.classes import User
 from app.windows.user.user_frames import AddRecipeFrame
+from app.config import ICON_PATH
 
 # Основное окно приложения
 class MainApp(ctk.CTk):
@@ -12,7 +14,7 @@ class MainApp(ctk.CTk):
 
         self.geometry(f"1280x720+100+100")   # Standard size 600x400
         self.title("TastyHub (Администратор)")
-        self.iconbitmap("images/icon.ico")
+        self.iconbitmap(ICON_PATH)
         self.resizable(False, False)
 
         # Создаем основное окно

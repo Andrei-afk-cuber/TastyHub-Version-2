@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from app.windows.login.config import theme
+from app.config import theme
 from tkinter import messagebox, filedialog
 from app.classes import Recipe, RecipeCard
 from PIL import Image, ImageTk

@@ -1,8 +1,8 @@
 import customtkinter as tk
 from .frames import MainFrame, RegistrationFrame
-from .classes import User
+from app.config import ICON_PATH
 
-# Основное окно приложения
+# Main app window
 class LoginMainApp(tk.CTk):
     def __init__(self, user_program_class, admin_program_class):
         super().__init__()
@@ -12,23 +12,23 @@ class LoginMainApp(tk.CTk):
 
         self.geometry(f"600x400+550+250")   # Standard size 600x400
         self.title("Авторизация")
-        self.iconbitmap("images/icon.ico")
+        self.iconbitmap(ICON_PATH)
         # Create the main frame
         self.main_frame = MainFrame(self)
         self.main_frame.pack(fill="both", expand=True)
         self.frames = {}
 
-    # Функция для изменения геометрии
+    # Change geometry method
     def change_geometry(self, new_geometry):
         # Change the window geometry
         self.geometry(new_geometry)
 
-    # Функция для изменения заголовка окна
+    # Change title method
     def change_title(self, new_title):
         # Change the window title
         self.title(new_title)
 
-    # Функция создания фрейма регистрации
+    # Open register frame method
     def open_register_frame(self):
         # Уничтожаем основной фрейм и отрисовываем фрейм регистрации
         self.main_frame.destroy()

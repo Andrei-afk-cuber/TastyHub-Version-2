@@ -1,5 +1,7 @@
 import socket
 import json
+from typing import Optional
+
 from app.windows.login.classes import User
 
 SERVER_HOST = '127.0.0.1'
@@ -24,24 +26,20 @@ def toggle_password(p_block, show_password_var):
         p_block.configure(show="*")
 
 
-def check_login(username, password):
+def check_login(username: str, password: str) -> Optional[User]:
     response = send_request({
         "action": "check_login",
         "username": username,
         "password": password
     })
 
-    if response.get("status") == "success" and response.get("user"):
+    if response["status"] == "success" and response.get("user"):
         user_data = response["user"]
-        return User(
-            id=user_data["id"],
-            username=user_data["username"],
-            password=user_data["password"],
-            admin=user_data["admin"],
-            authorized=user_data["authorized"]
-        )
-    return False
+        user_data['password'] = 'password'
 
+        return User(**user_data)
+
+    return None
 
 def register_user(username, password):
     response = send_request({

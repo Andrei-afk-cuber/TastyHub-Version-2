@@ -3,8 +3,7 @@ from pathlib import Path
 
 from app.windows.user.user_frames import MainFrame, AddRecipeFrame, ShowRecipeFrame, UserProfileFrame
 from app.classes import User
-
-ICON_PATH = Path(__file__).resolve().parent.parent.parent / "images/icon.ico"
+from app.config import ICON_PATH
 
 # Основное окно приложения
 class MainApp(ctk.CTk):
@@ -70,4 +69,5 @@ class MainApp(ctk.CTk):
             frame.destroy()
         self.frames = {}
 
-MainApp().mainloop()
+if __name__ == "__main__":
+    MainApp().mainloop()
