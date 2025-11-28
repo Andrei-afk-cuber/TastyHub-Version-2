@@ -141,8 +141,8 @@ class RecipeCard(ctk.CTkFrame):
         self.image_label.grid(row=1, column=0, padx=10, pady=5)
 
         # Краткое описание
-        short_desc = (recipe.getDescription()[:100] + "...") if len(
-            recipe.getDescription()) > 100 else recipe.getDescription()
+        short_desc = (recipe.description[:100] + "...") if len(
+            recipe.description) > 100 else recipe.description
         self.desc_label = ctk.CTkLabel(
             self,
             text=short_desc,

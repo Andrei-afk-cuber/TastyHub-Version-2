@@ -1,5 +1,5 @@
 import customtkinter as tk
-from .frames import MainFrame, RegistrationFrame
+from app.windows.login.frames import MainFrame, RegistrationFrame
 from app.config import ICON_PATH
 
 # Main app window
@@ -58,3 +58,7 @@ class LoginMainApp(tk.CTk):
         for frame_name, frame in self.frames.items():
             frame.destroy()
         self.frames = {}
+
+if __name__ == '__main__':
+    app = LoginMainApp()
+    app.mainloop()

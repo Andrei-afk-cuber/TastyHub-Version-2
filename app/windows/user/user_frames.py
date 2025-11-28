@@ -473,7 +473,7 @@ class ShowRecipeFrame(ctk.CTkFrame):
         # Название рецепта и автор
         ctk.CTkLabel(
             master=self.show_recipe_frame,
-            text=f"{self.recipe.getName()} by {self.recipe.getAuthor()} ({self.recipe.getCookingTime()} мин.)",
+            text=f"{self.recipe.name} by {self.recipe.user_id} ({self.recipe.cooking_time} мин.)",
             font=('Century Gothic', 24, 'bold'),
         ).place(relx=0.5, rely=0.5, anchor=ctk.CENTER)
 
@@ -502,7 +502,7 @@ class ShowRecipeFrame(ctk.CTkFrame):
 
         # Список ингредиентов
         start_y = 130
-        for ingredient in self.recipe.getProductList():
+        for ingredient in self.recipe.products:
             ctk.CTkLabel(
                 master=self,
                 text=f"• {ingredient}",
@@ -533,7 +533,7 @@ class ShowRecipeFrame(ctk.CTkFrame):
             padx=10,
             pady=10
         )
-        self.description_text.insert("1.0", self.recipe.getDescription())
+        self.description_text.insert("1.0", self.recipe.description)
         self.description_text.configure(state="disabled")  # Запрещаем редактирование
         self.description_text.pack(pady=(0, 10), padx=20, fill="both", expand=True)
 
@@ -583,7 +583,7 @@ class UserProfileFrame(ctk.CTkFrame):
         super().__init__(master)
 
         self.master = master
-        self.recipes = load_recipes(by_author=self.master.user.getUsername(), only_confirmed=False)
+        self.recipes = load_recipes(by_author=self.master.user.user_name, only_confirmed=False)
 
         self.setup_user_profile_frame()
 

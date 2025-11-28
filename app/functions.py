@@ -1,7 +1,8 @@
 import sqlite3
 import os
 import shutil
-from app.classes import Recipe, User
+# from app.classes import Recipe, User
+from app.classes import Recipe
 from tkinter import messagebox
 from PIL import Image
 import customtkinter as ctk
@@ -76,40 +77,74 @@ def update_recipe(old_recipe, new_recipe, by_admin=False):
         messagebox.showerror("Ошибка", f"Ошибка при обновлении рецепта: {str(e)}")
         return False
 
-def load_recipes(only_confirmed=True, limit=None, by_author=None, by_name=None, by_ingredients=None):
+def load_recipes(only_confirmed=True, by_name=None, by_ingredients=None):                             # temp method for check bug place
     response = send_request({
         "action": "load_recipes",
         "only_confirmed": only_confirmed,
-        "limit": limit,
-        "by_author": by_author,
         "by_name": by_name,
         "by_ingredients": by_ingredients
     })
+
     if response.get("status") == "success":
         recipes = []
         os.makedirs("recipe_images", exist_ok=True)
         for recipe_data in response.get("recipes", []):
-            try:
-                picture_path = recipe_data['picture_path']
-                if recipe_data.get('image_data'):
-                    image_path = os.path.join("recipe_images", picture_path)
-                    with open(image_path, 'wb') as img_file:
-                        img_file.write(base64.b64decode(recipe_data['image_data']))
-                recipes.append(Recipe(
-                    id=recipe_data["id"],
-                    author=recipe_data['author_name'],
-                    name=recipe_data['recipe_name'],
-                    description=recipe_data['description'],
-                    picture_path=picture_path,
-                    cooking_time=recipe_data['cooking_time'],
-                    product_list=[p.strip() for p in recipe_data['products'].split(',') if p.strip()],
-                    confirmed=recipe_data['confirmed']
-                ))
-            except Exception as e:
-                print(f"Error processing recipe {recipe_data.get('recipe_name', 'unknown')}: {e}")
-                continue
+            picture_path = recipe_data['picture_path']
+            if recipe_data.get('image_data'):
+                image_path = os.path.join("recipe_images", picture_path)
+                with open(image_path, 'wb') as img_file:
+                    img_file.write(base64.b64decode(recipe_data['image_data']))
+
+            print(recipe_data)
+
+            recipes.append(Recipe(
+                recipe_data["id"],
+                recipe_data['name'],
+                recipe_data['description'],
+                recipe_data['cooking_time'],
+                picture_path,
+                recipe_data['confirmed'],
+                recipe_data['user_id'],
+                recipe_data['products']
+            ))
+
         return recipes
-    return []
+
+
+# def load_recipes(only_confirmed=True, by_name=None, by_ingredients=None):                             # its need refactoring
+#     response = send_request({
+#         "action": "load_recipes",
+#         "only_confirmed": only_confirmed,
+#         "by_name": by_name,
+#         "by_ingredients": by_ingredients
+#     })
+#     print(response)
+#     if response.get("status") == "success":
+#         recipes = []
+#         os.makedirs("recipe_images", exist_ok=True)
+#         for recipe_data in response.get("recipes", []):
+#             try:
+#                 picture_path = recipe_data['picture_path']
+#                 if recipe_data.get('image_data'):
+#                     image_path = os.path.join("recipe_images", picture_path)
+#                     with open(image_path, 'wb') as img_file:
+#                         img_file.write(base64.b64decode(recipe_data['image_data']))
+#                 recipes.append(Recipe(
+#                     id=recipe_data["id"],
+#                     name=recipe_data['name'],
+#                     description=recipe_data['description'],
+#                     cooking_time=recipe_data['cooking_time'],
+#                     picture_path=picture_path,
+#                     confirmed=recipe_data['confirmed'],
+#                     user_id=recipe_data['user_id'],
+#                     products=recipe_data['products']
+#                 ))
+#                 breakpoint()
+#             except Exception as e:
+#                 print(f"Error processing recipe {recipe_data.get('recipe_name', 'unknown')}: {e}")
+#                 continue
+#         return recipes
+#     return []
 
 def load_users():
     response = send_request({"action": "load_users"})
@@ -610,3 +645,7 @@ class UserCard(ctk.CTkFrame):
         if answer:
             delete_user(self.user)
             self.main_program.main_frame.display_users()
+
+# debug
+if __name__ == '__main__':
+    print(load_recipes())
