@@ -70,5 +70,3 @@ class MainApp(ctk.CTk):
 
 if __name__ == "__main__":
     main_app = MainApp()
-    main_app.open_user_profile_frame()
-    main_app.mainloop()

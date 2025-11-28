@@ -50,9 +50,9 @@ def close_database_connection(db):
 def update_recipe(old_recipe, new_recipe, by_admin=False):
     try:
         image_data = None
-        image_name = old_recipe.getPicturePath()
-        if old_recipe.getPicturePath() != new_recipe.getPicturePath():
-            image_path = new_recipe.getPicturePath()
+        image_name = old_recipe.picture_path
+        if old_recipe.picture_path != new_recipe.picture_path:
+            image_path = new_recipe.picture_path
             with open(image_path, 'rb') as img_file:
                 image_data = base64.b64encode(img_file.read()).decode('utf-8')
             image_name = os.path.basename(image_path)
@@ -65,7 +65,7 @@ def update_recipe(old_recipe, new_recipe, by_admin=False):
             "products": ', '.join(new_recipe.getProductList()),
             "image_name": image_name,
             "image_data": image_data,
-            "old_image": old_recipe.getPicturePath()
+            "old_image": old_recipe.picture_path,
         }
         response = send_request({
             "action": "update_recipe",
@@ -224,7 +224,7 @@ def update_recipe_by_id(old_recipe, new_recipe, by_admin=False):
             "description": new_recipe.getDescription(),
             "cooking_time": new_recipe.getCookingTime(),
             "products": ', '.join(new_recipe.getProductList()),
-            "image_name": os.path.basename(new_recipe.getPicturePath()),
+            "image_name": os.path.basename(new_recipe.picture_path),
             "image_data": None,
             "old_image": None
         },
@@ -342,7 +342,7 @@ class EditableRecipeCard(ctk.CTkFrame):
 
     def load_recipe_image(self):
         try:
-            image_path = os.path.join("recipe_images", self.recipe.getPicturePath())
+            image_path = os.path.join("recipe_images", self.recipe.picture_path)
             if os.path.exists(image_path):
                 self.ctk_image = ctk.CTkImage(
                     light_image=Image.open(image_path),
@@ -389,7 +389,7 @@ class EditableRecipeCard(ctk.CTkFrame):
             if hasattr(self, 'ctk_image'):
                 self.image_label.configure(image=None)
                 del self.ctk_image
-            image_path = os.path.join("recipe_images", self.recipe.getPicturePath())
+            image_path = os.path.join("recipe_images", self.recipe.picture_path)
             if os.path.exists(image_path):
                 try:
                     os.remove(image_path)
@@ -489,7 +489,7 @@ class AdminRecipeCard(ctk.CTkFrame):
 
     def load_recipe_image(self):
         try:
-            image_path = os.path.join("recipe_images", self.recipe.getPicturePath())
+            image_path = os.path.join("recipe_images", self.recipe.picture_path)
             if os.path.exists(image_path):
                 self.ctk_image = ctk.CTkImage(
                     light_image=Image.open(image_path),
@@ -536,7 +536,7 @@ class AdminRecipeCard(ctk.CTkFrame):
             if hasattr(self, 'ctk_image'):
                 self.image_label.configure(image=None)
                 del self.ctk_image
-            image_path = os.path.join("recipe_images", self.recipe.getPicturePath())
+            image_path = os.path.join("recipe_images", self.recipe.picture_path)
             if os.path.exists(image_path):
                 try:
                     os.remove(image_path)
