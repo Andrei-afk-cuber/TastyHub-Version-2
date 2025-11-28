@@ -4,45 +4,46 @@ from PIL import ImageTk, Image
 
 from app.config import theme
 
-class User(object):
-    def __init__(self, username, password, admin=False, authorized=False, id=0):
-        self.__id = id
-        self.__username = username
-        self.__password = password
-        self.__admin = admin
-        self.__authorized = authorized
+# user data-class
+class User:
+    def __init__(self, id: int, username: str, password: str, admin: int, authorized: int, recipes: list) -> None:
+        self._id = id
+        self._username = username
+        self._password = password
+        self._admin = admin
+        self._authorized = authorized
+        self._recipes = recipes
 
-    def getId(self):
-        return self.__id
+    @property
+    def id(self) -> int:
+        return self._id
 
-    def getUsername(self):
-        return self.__username
+    @property
+    def username(self) -> str:
+        return self._username
 
-    def getPassword(self):
-        return self.__password
+    @property
+    def password(self) -> str:
+        return self._password
 
-    def isAdmin(self):
-        return self.__admin
+    @property
+    def admin(self) -> int:
+        return self._admin
 
-    def isAuthorized(self):
-        return self.__authorized
+    @property
+    def authorized(self) -> int:
+        return self._authorized
 
-    def setUsername(self, login):
-        self.__username = login
+    @property
+    def recipes(self) -> list:
+        return self._recipes
 
-    def setPassword(self, password):
-        self.__password = password
+    def __repr__(self):
+        return (f"User(id={self._id}, name={self._username}, password={self._password}, admin={bool(self._admin)}, "
+                f"authorized={bool(self._authorized)}, recipes={self._recipes})")
 
-    def setAdmin(self, admin):
-        self.__admin = admin
 
-    def activateAccount(self):
-        self.__authorized = True
-
-    def deactivateAccount(self):
-        self.__authorized = False
-
-# recipe model
+# recipe data-class
 class Recipe:
     def __init__(self, id, name, description, cooking_time, picture_path, confirmed, user_name, products):
         self._id = id
