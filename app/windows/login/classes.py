@@ -9,6 +9,7 @@ class User(object):
     def getId(self):
         return self.__id
 
+    @property
     def username(self):
         return self.__username
 
