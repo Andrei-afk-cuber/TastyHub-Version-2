@@ -1,3 +1,4 @@
+# importing necessary libraries
 import sqlite3
 import os
 import shutil
@@ -6,17 +7,17 @@ from app.classes import Recipe
 from tkinter import messagebox
 from PIL import Image
 import customtkinter as ctk
-from app.config import theme
 import socket
 import json
 import datetime
 import base64
 import io
 
+# from app.classes import Recipe, User
+from app.classes import Recipe
+from app.config import theme
 from app.models.main import User
-
-SERVER_HOST = "127.0.0.1"
-SERVER_PORT = 65432
+from app.config import SERVER_HOST, SERVER_PORT
 
 def send_request(request):
     try:
@@ -94,16 +95,23 @@ def load_recipes(only_confirmed=True, by_name=None, by_ingredients=None, by_user
         "by_ingredients": by_ingredients,
         "by_username": by_username
     })
-
     if response.get("status") == "success":
         recipes = []
         os.makedirs("recipe_images", exist_ok=True)
+
         for recipe_data in response.get("recipes", []):
             picture_path = recipe_data['picture_path']
+
             if recipe_data.get('image_data'):
-                image_path = os.path.join("recipe_images", picture_path)
-                with open(image_path, 'wb') as img_file:
-                    img_file.write(base64.b64decode(recipe_data['image_data']))
+                try:
+                    image_path = os.path.join("recipe_images", picture_path)
+
+                    if not os.path.exists(image_path):
+                        image_bytes = base64.b64decode(recipe_data['image_data'])
+                        with open(image_path, 'wb') as img_file:
+                            img_file.write(image_bytes)
+                except Exception as e:
+                    print(f"Image decode error: {e}")
 
             recipes.append(Recipe(
                 recipe_data["id"],

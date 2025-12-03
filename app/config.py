@@ -1,8 +1,11 @@
+# importing necessary libraries
 import pathlib
 
+# config variables
 PROJECT_ROOT = pathlib.Path(__file__).parent.parent
 ICON_PATH = PROJECT_ROOT / 'app' / 'images' / 'icon.ico'
-
+SERVER_HOST = "127.0.0.1"
+SERVER_PORT = 65432
 
 theme = {
     'fg_color':'#e06b04',
