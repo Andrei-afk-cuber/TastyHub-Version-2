@@ -15,3 +15,12 @@ theme = {
     'recipe_card_fg_color':"#333333"
 }
 
+day_theme = {
+    'fg_color':'#fffdfc',
+    'hover_color':'#b55604',
+    'text_color':'#ffffff',
+    'textbox_bg_color':"#171717",
+    'recipe_card_fg_color':"#333333",
+    'bg_color':'#e06b04',
+}
+

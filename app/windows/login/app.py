@@ -30,20 +30,21 @@ class LoginMainApp(tk.CTk):
 
     # Open register frame method
     def open_register_frame(self):
-        # Уничтожаем основной фрейм и отрисовываем фрейм регистрации
+        # Destroy main frame and create register frame
         self.main_frame.destroy()
-        # Запускаем фрейм регистрации
+        # Start register frame
         self.register_frame = RegistrationFrame(self)
         self.frames['register_frame'] = self.register_frame
         self.register_frame.pack(expand=True, fill="both")
 
-    # Открываем основной фрейм
+    # Open main frame
     def open_main_frame(self):
         self.destroy_all_frames()
         self.change_title("Авторизация")
         self.main_frame = MainFrame(self)
         self.main_frame.pack(fill="both", expand=True)
 
+    # Open main program
     def open_main_program(self, user):
         self.destroy()
         if user.admin():
@@ -53,8 +54,8 @@ class LoginMainApp(tk.CTk):
 
         self.main_program.mainloop()
 
+    # function for delete all frames
     def destroy_all_frames(self):
-        # Удаляем все фреймы, которые есть в словаре
         for frame_name, frame in self.frames.items():
             frame.destroy()
         self.frames = {}

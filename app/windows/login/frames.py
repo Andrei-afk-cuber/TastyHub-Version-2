@@ -1,7 +1,7 @@
 import customtkinter as ctk
 from customtkinter import CTkLabel
 from .functions import toggle_password, check_login, register_user
-from app.config import theme
+from app.config import day_theme as theme
 from tkinter import messagebox
 
 # Класс основного фрейма приложения
@@ -15,7 +15,7 @@ class MainFrame(ctk.CTkFrame):
     # Функция для отрисовки основного фрейма
     def setup_login_frame(self):
         # Создание фрейма входа в аккаунт
-        self.login_frame = ctk.CTkFrame(master=self, width=320, height=380)
+        self.login_frame = ctk.CTkFrame(master=self, width=320, height=380, fg_color="#f2f2f2")
         self.login_frame.place(relx=0.5, rely=0.5, anchor=ctk.CENTER)
 
         # Верхний текст
