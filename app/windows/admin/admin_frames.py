@@ -106,11 +106,12 @@ class MainFrame(ctk.CTkFrame):
         for widget in self.data_container.winfo_children():
             widget.destroy()
 
-        # Создаем карточки для каждого рецепта
-        for i, recipe in enumerate(self.recipes):
-            card = AdminRecipeCard(
-                master=self.data_container,
-                recipe=recipe,
-                main_program=self.master
-            )
-            card.grid(pady=5, padx=5, sticky="ew")
+        if self.recipes:
+            # Создаем карточки для каждого рецепта
+            for i, recipe in enumerate(self.recipes):
+                card = AdminRecipeCard(
+                    master=self.data_container,
+                    recipe=recipe,
+                    main_program=self.master
+                )
+                card.grid(pady=5, padx=5, sticky="ew")

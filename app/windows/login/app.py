@@ -46,7 +46,7 @@ class LoginMainApp(tk.CTk):
 
     def open_main_program(self, user):
         self.destroy()
-        if user.isAdmin():
+        if user.admin():
             self.main_program = self.admin_program_class(user)
         else:
             self.main_program = self.user_program_class(user)

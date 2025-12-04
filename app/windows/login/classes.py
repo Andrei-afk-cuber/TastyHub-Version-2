@@ -16,7 +16,7 @@ class User(object):
     def getPassword(self):
         return self.__password
 
-    def isAdmin(self):
+    def admin(self):
         return self.__admin
 
     def isAuthorized(self):

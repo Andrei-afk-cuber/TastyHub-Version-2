@@ -210,21 +210,22 @@ def delete_recipe(recipe):
 def accept_user(user):
     response = send_request({
         "action": "activate_user",
-        "user_id": user.getId()
+        "user_id": user.id
     })
     return response.get("status") == "success"
 
 def grant_admin_privileges(user):
+    accept_user(user)
     response = send_request({
         "action": "grant_admin_privileges",
-        "user_id": user.getId()
+        "user_id": user.id
     })
     return response.get("status") == "success"
 
 def delete_user(user):
     response = send_request({
         "action": "delete_user",
-        "user_id": user.getId()
+        "user_id": user.id
     })
     return response.get("status") == "success"
 
@@ -518,17 +519,17 @@ class UserCard(ctk.CTkFrame):
 
         self.username_label = ctk.CTkLabel(
             master=self,
-            text=user.username(),
+            text=user.username,
             text_color="green",
             font=("Century Gothic", 14, "bold"),
         )
         self.username_label.place(rely=0.5, relx=0.02, anchor="w")
 
-        if not user.isAuthorized():
+        if not user.authorized:
             self.username_label.configure(text_color="red")
-        if user.isAdmin():
+        if user.admin:
             self.username_label.configure(text_color="blue")
-        if self.main_program.user.username() == user.username():
+        if self.main_program.user.username == user.username:
             self.username_label.configure(text_color="gold")
 
         self.delete_user_button = ctk.CTkButton(
@@ -542,7 +543,7 @@ class UserCard(ctk.CTkFrame):
         )
         self.delete_user_button.place(rely=0.5, relx=0.9, anchor="w")
 
-        if not user.isAuthorized():
+        if not user.authorized:
             self.accept_user_button = ctk.CTkButton(
                 master=self,
                 text="Одобрить",
@@ -554,7 +555,7 @@ class UserCard(ctk.CTkFrame):
             )
             self.accept_user_button.place(rely=0.5, relx=0.8, anchor="w")
 
-        if not user.isAdmin():
+        if not user.admin:
             self.set_admin_button = ctk.CTkButton(
                 master=self,
                 text="Сделать админом",
@@ -567,7 +568,7 @@ class UserCard(ctk.CTkFrame):
     def confirm_user_confirm(self):
         answer = messagebox.askyesno(
             "Подтверждение верификации",
-            f"Вы уверены, что хотите подтвердить пользователя '{self.user.username()}'?",
+            f"Вы уверены, что хотите подтвердить пользователя '{self.user.username}'?",
             parent=self
         )
         if answer:
@@ -577,7 +578,7 @@ class UserCard(ctk.CTkFrame):
     def confirm_user_admin(self):
         answer = messagebox.askyesno(
             "Подтверждение админки",
-            f"Вы уверены, что хотите выдать пользователю '{self.user.username()}' права администратора?",
+            f"Вы уверены, что хотите выдать пользователю '{self.user.username}' права администратора?",
         )
         if answer:
             grant_admin_privileges(self.user)
@@ -586,7 +587,7 @@ class UserCard(ctk.CTkFrame):
     def confirm_user_delete(self):
         answer = messagebox.askyesno(
             "Подтверждение удаления",
-            f"Вы уверены, что хотите удалить пользователя '{self.user.username()}'?",
+            f"Вы уверены, что хотите удалить пользователя '{self.user.username}'?",
             parent=self
         )
         if answer:
