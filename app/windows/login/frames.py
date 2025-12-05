@@ -9,20 +9,21 @@ class MainFrame(ctk.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
         self.master = master
-
+        self.configure(fg_color=theme['background_color'])
         self.setup_login_frame()
 
     # Функция для отрисовки основного фрейма
     def setup_login_frame(self):
         # Создание фрейма входа в аккаунт
-        self.login_frame = ctk.CTkFrame(master=self, width=320, height=380, fg_color="#f2f2f2")
+        self.login_frame = ctk.CTkFrame(master=self, width=320, height=380, fg_color=theme['frame_background_color'])
         self.login_frame.place(relx=0.5, rely=0.5, anchor=ctk.CENTER)
 
         # Верхний текст
         self.text = CTkLabel(
             master=self.login_frame,
             text="TastyHub",
-            font=('Century Gothic', 32)
+            font=('Century Gothic', 32),
+            text_color=theme['text_color'],
         )
         self.text.place(x=90, y=45)
 
@@ -39,6 +40,10 @@ class MainFrame(ctk.CTkFrame):
             master=self.login_frame,
             width=220,
             placeholder_text="Логин пользователя",
+            border_width=0,
+            fg_color=theme['textbox_bg_color'],
+            placeholder_text_color=theme['textbox_text_color'],
+            text_color=theme['textbox_text_color']
         )
         self.u_block.place(x=50, y=110)
 
@@ -48,6 +53,10 @@ class MainFrame(ctk.CTkFrame):
             master=self.login_frame,
             width=220,
             placeholder_text="Пароль",
+            border_width=0,
+            fg_color=theme['textbox_bg_color'],
+            placeholder_text_color=theme['textbox_text_color'],
+            text_color=theme['textbox_text_color'],
             show="*"
         )
         self.p_block.place(x=50, y=150)
@@ -57,10 +66,12 @@ class MainFrame(ctk.CTkFrame):
             master=self.login_frame,
             text="Показать пароль",
             font=('Century Gothic', 12),
+            border_width=2,
             command=lambda: toggle_password(self.p_block, self.show_password_var),
             variable=self.show_password_var,
-            fg_color=theme['fg_color'],
+            fg_color=theme['button_color'],
             hover_color=theme['hover_color'],
+            text_color=theme['text_color']
         )
         self.show_password.place(x=50, y=190)
 
@@ -70,7 +81,7 @@ class MainFrame(ctk.CTkFrame):
             width=120,
             text="Войти",
             corner_radius=6,
-            fg_color=theme['fg_color'],
+            fg_color=theme['button_color'],
             text_color=theme['text_color'],
             hover_color=theme['hover_color'],
             command=self.check_login_credentials,
@@ -83,7 +94,7 @@ class MainFrame(ctk.CTkFrame):
             width=120,
             text="Создать аккаунт",
             corner_radius=6,
-            fg_color=theme['fg_color'],
+            fg_color=theme['button_color'],
             text_color=theme['text_color'],
             hover_color=theme['hover_color'],
             command=self.master.open_register_frame
@@ -118,6 +129,7 @@ class RegistrationFrame(ctk.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
         self.master = master
+        self.configure(fg_color=theme['background_color'])
 
         self.setup_register_frame()
 
@@ -128,7 +140,8 @@ class RegistrationFrame(ctk.CTkFrame):
         self.registration_frame = ctk.CTkFrame(
             master=self,
             width=320,
-            height=380
+            height=380,
+            fg_color=theme['frame_background_color'],
         )
         self.registration_frame.place(relx=0.5, rely=0.5, anchor=ctk.CENTER)
 
@@ -136,7 +149,8 @@ class RegistrationFrame(ctk.CTkFrame):
         self.text = CTkLabel(
             master=self.registration_frame,
             text="Добро пожаловать в\n TestyHub",
-            font=('Century Gothic', 25)
+            font=('Century Gothic', 25),
+            text_color=theme['text_color'],
         )
         self.text.place(relx=0.5, y=50, anchor=ctk.CENTER)
 
@@ -146,7 +160,7 @@ class RegistrationFrame(ctk.CTkFrame):
             height=30,
             text="Назад",
             corner_radius=6,
-            fg_color=theme['fg_color'],
+            fg_color=theme['frame_background_color'],
             text_color=theme['text_color'],
             hover_color=theme['hover_color'],
             command=self.master.open_main_frame
@@ -157,7 +171,11 @@ class RegistrationFrame(ctk.CTkFrame):
         self.username_entry = ctk.CTkEntry(
             master=self.registration_frame,
             width=220,
+            border_width=0,
             placeholder_text="Логин",
+            placeholder_text_color=theme['textbox_text_color'],
+            text_color=theme['textbox_text_color'],
+            fg_color=theme['background_color'],
         )
         self.username_entry.place(x=50, y=100)
 
@@ -167,7 +185,11 @@ class RegistrationFrame(ctk.CTkFrame):
             master=self.registration_frame,
             width=220,
             placeholder_text="Пароль",
-            show="*"
+            show="*",
+            border_width=0,
+            placeholder_text_color=theme['textbox_text_color'],
+            text_color=theme['textbox_text_color'],
+            fg_color=theme['background_color'],
         )
         self.p_block.place(x=50, y=140)
 
@@ -176,9 +198,11 @@ class RegistrationFrame(ctk.CTkFrame):
             master=self.registration_frame,
             text="Показать пароль",
             font=('Century Gothic', 12),
+            border_width=2,
             command=lambda: toggle_password(self.p_block, self.show_password_var),
             variable=self.show_password_var,
-            fg_color=theme['fg_color'],
+            text_color=theme['text_color'],
+            fg_color=theme['button_color'],
             hover_color=theme['hover_color'],
         )
         self.show_password.place(x=50, y=190)
@@ -188,7 +212,7 @@ class RegistrationFrame(ctk.CTkFrame):
             width=120,
             text="Зарегистрироваться",
             corner_radius=6,
-            fg_color=theme['fg_color'],
+            fg_color=theme['button_color'],
             text_color=theme['text_color'],
             hover_color=theme['hover_color'],
             command=self.new_user_data

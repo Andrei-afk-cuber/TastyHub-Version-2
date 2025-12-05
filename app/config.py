@@ -16,11 +16,13 @@ theme = {
 }
 
 day_theme = {
-    'fg_color':'#fffdfc',
-    'hover_color':'#b55604',
-    'text_color':'#ffffff',
-    'textbox_bg_color':"#171717",
+    'background_color':'#ffcca1', # foreground color
+    'frame_background_color':'#ffe0c6', # frame bg color
+    'button_color':'#ffcca1', # color of buttons
+    'hover_color':'#ffb373', # color of active buttons
+    'text_color':'#000000', # color of text
+    'textbox_bg_color':"#ffcca1", # textbox bg color
     'recipe_card_fg_color':"#333333",
-    'bg_color':'#e06b04',
+    'textbox_text_color': '#000000'
 }
 
