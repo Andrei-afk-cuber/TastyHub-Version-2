@@ -301,8 +301,9 @@ class EditableRecipeCard(ctk.CTkFrame):
             text="Редактировать",
             width=100,
             height=30,
-            fg_color=theme['fg_color'],
+            fg_color=theme['background_color'],
             hover_color=theme['hover_color'],
+            text_color=theme['text_color'],
             command=lambda: self.main_program.open_edit_recipe_frame(recipe)
         )
         self.edit_btn.pack(side="left", padx=5)
@@ -423,8 +424,9 @@ class AdminRecipeCard(ctk.CTkFrame):
             text="Редактировать",
             width=120,
             height=30,
-            fg_color=theme['background_color'],
+            fg_color=theme['frame_background_color'],
             hover_color=theme['hover_color'],
+            text_color=theme['text_color'],
             command=lambda: self.main_program.open_edit_recipe_frame(recipe)
         )
         self.edit_btn.place(x=1100, y=80, anchor='w')

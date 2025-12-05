@@ -2,7 +2,7 @@ import customtkinter as ctk
 import os
 from PIL import ImageTk, Image
 
-from app.config import theme
+from app.config import day_theme as theme
 
 # user data-class
 class User:
@@ -110,9 +110,9 @@ class RecipeCard(ctk.CTkFrame):
     def __init__(self, master, recipe, main_program):
         super().__init__(
             master,
-            fg_color=theme['recipe_card_fg_color'],
+            fg_color=theme['background_color'],
             corner_radius=10,
-            border_width=1,
+            border_width=0,
             border_color="#e0e0e0",
             width=220,
             height=320
@@ -141,7 +141,8 @@ class RecipeCard(ctk.CTkFrame):
             width=180,
             height=120,
             fg_color="transparent",
-            corner_radius=8
+            corner_radius=8,
+            text_color=theme['text_color'],
         )
         self.image_label.grid(row=1, column=0, padx=10, pady=5)
 
@@ -154,7 +155,8 @@ class RecipeCard(ctk.CTkFrame):
             font=("Arial", 11),
             wraplength=180,
             justify="left",
-            height=60
+            height=60,
+            text_color=theme['text_color'],
         )
         self.desc_label.grid(row=2, column=0, padx=10, pady=5)
 
@@ -164,7 +166,8 @@ class RecipeCard(ctk.CTkFrame):
             text="Подробнее",
             width=120,
             height=30,
-            fg_color=theme['fg_color'],
+            fg_color=theme['frame_background_color'],
+            text_color=theme['text_color'],
             hover_color=theme['hover_color'],
             command=lambda:self.main_program.open_show_recipe_frame(recipe)
         )
@@ -200,7 +203,7 @@ class RecipeCard(ctk.CTkFrame):
                 )
             else:
                 self.image_label.configure(
-                    text="Изображение не найдено"
+                    text="Изображение не найдено",
                 )
         except Exception as e:
             print(f"Ошибка загрузки изображения: {e}")

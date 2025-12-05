@@ -3,7 +3,7 @@ from tkinter import messagebox, filedialog
 from PIL import Image, ImageTk
 import os
 
-from app.config import theme
+from app.config import day_theme as theme
 from app.functions import save_recipe, load_recipes, load_products, update_recipe_by_id, EditableRecipeCard
 from app.classes import Recipe, RecipeCard
 
@@ -11,6 +11,7 @@ from app.classes import Recipe, RecipeCard
 class MainFrame(ctk.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
+        self.configure(fg_color=theme['frame_background_color'])
 
         self.master = master
         # Загружаем рецепты
@@ -24,7 +25,7 @@ class MainFrame(ctk.CTkFrame):
     # Функция для отрисовки основного фрейма
     def setup_main_frame(self):
         # Создаем фрейм сверху страницы
-        self.main_frame = ctk.CTkFrame(master=self, width=1270, height=150)
+        self.main_frame = ctk.CTkFrame(master=self, width=1270, height=150, fg_color=theme['background_color'])
         self.main_frame.place(relx=0.5, rely=0.12, anchor=ctk.CENTER)
 
         # Кнопка закрытия программы
@@ -33,7 +34,7 @@ class MainFrame(ctk.CTkFrame):
             width=100,
             text="Закрыть",
             corner_radius=6,
-            fg_color=theme['fg_color'],
+            fg_color=theme['frame_background_color'],
             text_color=theme['text_color'],
             hover_color=theme['hover_color'],
             command=self.close_program
@@ -45,7 +46,10 @@ class MainFrame(ctk.CTkFrame):
             master=self.main_frame,
             fg_color="white",
             corner_radius=6,
-            text_color="black",
+            border_width=0,
+            text_color=theme['text_color'],
+            placeholder_text_color=theme['text_color'],
+            bg_color=theme['background_color'],
             width=800,
             height=40,
             font=('Century Gothic', 16)
@@ -59,7 +63,7 @@ class MainFrame(ctk.CTkFrame):
             height=40,
             text="Поиск",
             corner_radius=6,
-            fg_color=theme['fg_color'],
+            fg_color=theme['frame_background_color'],
             text_color=theme['text_color'],
             hover_color=theme['hover_color'],
             command = self.search_recipes
@@ -72,7 +76,7 @@ class MainFrame(ctk.CTkFrame):
             width=100,
             text="Добавить рецепт",
             corner_radius=6,
-            fg_color=theme['fg_color'],
+            fg_color=theme['frame_background_color'],
             text_color=theme['text_color'],
             hover_color=theme['hover_color'],
             command=self.master.open_add_recipe_frame
@@ -85,7 +89,7 @@ class MainFrame(ctk.CTkFrame):
             width=100,
             text="Мои публикации",
             corner_radius=6,
-            fg_color=theme['fg_color'],
+            fg_color=theme['frame_background_color'],
             text_color=theme['text_color'],
             hover_color=theme['hover_color'],
             command=self.master.open_user_profile_frame
@@ -97,8 +101,9 @@ class MainFrame(ctk.CTkFrame):
             text="По имени",
             value="name",
             variable=self.radiobutton_variable,
-            fg_color=theme['fg_color'],
+            fg_color='white',
             hover_color=theme['hover_color'],
+            text_color=theme['text_color'],
         )
         search_by_name.place(relx=0.3, y=110)
 
@@ -107,8 +112,9 @@ class MainFrame(ctk.CTkFrame):
             text="По ингредиентам",
             value="ingredients",
             variable=self.radiobutton_variable,
-            fg_color=theme['fg_color'],
+            fg_color='white',
             hover_color=theme['hover_color'],
+            text_color=theme['text_color']
         )
         search_by_ingredients.place(relx=0.5, y=110)
 
@@ -117,7 +123,7 @@ class MainFrame(ctk.CTkFrame):
             master=self,
             width=1200,
             height=500,
-            fg_color="transparent"
+            fg_color="transparent",
         )
         self.recipes_container.place(relx=0.5, rely=0.6, anchor=ctk.CENTER)
 
@@ -200,7 +206,7 @@ class AddRecipeFrame(ctk.CTkFrame):
             width=100,
             text="Назад",
             corner_radius=6,
-            fg_color=theme['fg_color'],
+            fg_color=theme['frame_background_color'],
             text_color=theme['text_color'],
             hover_color=theme['hover_color'],
             command=self.master.open_main_frame
@@ -280,7 +286,7 @@ class AddRecipeFrame(ctk.CTkFrame):
 
         self.load_image_button = ctk.CTkButton(
             master=self.recipe_data_frame,
-            fg_color=theme['fg_color'],
+            fg_color=theme['frame_background_color'],
             hover_color=theme['hover_color'],
             corner_radius=6,
             font=('Century Gothic', 12),
@@ -311,7 +317,7 @@ class AddRecipeFrame(ctk.CTkFrame):
         self.send_recipe_button = ctk.CTkButton(
             master=self.recipe_data_frame,
             text="Отправить",
-            fg_color=theme['fg_color'],
+            fg_color=theme['frame_background_color'],
             text_color=theme['text_color'],
             hover_color=theme['hover_color'],
             corner_radius=6,
@@ -481,7 +487,7 @@ class ShowRecipeFrame(ctk.CTkFrame):
             width=100,
             text="Назад",
             corner_radius=6,
-            fg_color=theme['fg_color'],
+            fg_color=theme['frame_background_color'],
             text_color=theme['text_color'],
             hover_color=theme['hover_color'],
             command=self.master.open_main_frame
@@ -616,7 +622,7 @@ class UserProfileFrame(ctk.CTkFrame):
             width=100,
             text="Назад",
             corner_radius=6,
-            fg_color=theme['fg_color'],
+            fg_color=theme['frame_background_color'],
             text_color=theme['text_color'],
             hover_color=theme['hover_color'],
             command=self.master.open_main_frame
