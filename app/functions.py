@@ -13,7 +13,7 @@ import io
 
 # from app.classes import Recipe, User
 from app.classes import Recipe
-from app.config import theme
+from app.config import day_theme as theme
 from app.models.main import User
 from app.config import SERVER_HOST, SERVER_PORT
 
@@ -360,9 +360,10 @@ class AdminRecipeCard(ctk.CTkFrame):
     def __init__(self, master, recipe, main_program):
         super().__init__(
             master,
-            fg_color=theme['recipe_card_fg_color'],
+            fg_color=theme['background_color'],
             corner_radius=10,
-            border_width=1,
+            border_width=2,
+            border_color=theme['hover_color'],
             width=1230,
             height=150
         )
@@ -378,7 +379,7 @@ class AdminRecipeCard(ctk.CTkFrame):
             text_color=theme['text_color'],
             height=40
         )
-        self.name_label.place(relx=0.5, rely=0.1, anchor=ctk.CENTER)
+        self.name_label.place(relx=0.5, rely=0.15, anchor=ctk.CENTER)
 
         if not recipe.confirmed:
             self.name_label.configure(text_color="red")
@@ -401,7 +402,8 @@ class AdminRecipeCard(ctk.CTkFrame):
             font=("Arial", 11),
             wraplength=180,
             justify="left",
-            height=60
+            height=60,
+            text_color=theme['text_color']
         )
         self.desc_label.place(rely=0.4, relx=0.2, anchor='w')
 
@@ -412,7 +414,6 @@ class AdminRecipeCard(ctk.CTkFrame):
             height=30,
             fg_color="#db0404",
             hover_color="#910000",
-            text_color="white",
             command=self.confirm_delete
         )
         self.delete_btn.place(x=1100, y=40, anchor='w')
@@ -422,7 +423,7 @@ class AdminRecipeCard(ctk.CTkFrame):
             text="Редактировать",
             width=120,
             height=30,
-            fg_color=theme['fg_color'],
+            fg_color=theme['background_color'],
             hover_color=theme['hover_color'],
             command=lambda: self.main_program.open_edit_recipe_frame(recipe)
         )
@@ -508,9 +509,10 @@ class UserCard(ctk.CTkFrame):
     def __init__(self, master, user, main_program):
         super().__init__(
             master,
-            fg_color=theme['recipe_card_fg_color'],
+            fg_color=theme['background_color'],
             corner_radius=10,
-            border_width=1,
+            border_width=2,
+            border_color=theme['hover_color'],
             width=1230,
             height=60
         )
@@ -530,7 +532,7 @@ class UserCard(ctk.CTkFrame):
         if user.admin:
             self.username_label.configure(text_color="blue")
         if self.main_program.user.username == user.username:
-            self.username_label.configure(text_color="gold")
+            self.username_label.configure(text_color="#03fccf")
 
         self.delete_user_button = ctk.CTkButton(
             master=self,
