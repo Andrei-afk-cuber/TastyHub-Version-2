@@ -184,163 +184,9 @@ class AddRecipeFrame(ctk.CTkFrame):
         self.selected_image_path = None
         self.products = load_products()
 
+        self.configure(fg_color=theme['frame_background_color'])
         self.setup_add_recipe_frame()
 
-    def setup_add_recipe_frame(self):
-        # Create recipe frame
-        self.header_frame = ctk.CTkFrame(master=self, width=1270, height=50)
-        self.header_frame.place(relx=0.5, rely=0.05, anchor=ctk.CENTER)
-
-        # top text
-        self.text = ctk.CTkLabel(
-            master=self.header_frame,
-            text="Добавление рецепта",
-            font=('Century Gothic', 36),
-            text_color=theme['text_color']
-        )
-        self.text.place(relx=0.35, rely=0)
-
-        # Кнопка возврата к основному фрейму
-        self.back_to_main_button = ctk.CTkButton(
-            master=self.header_frame,
-            width=100,
-            text="Назад",
-            corner_radius=6,
-            fg_color=theme['frame_background_color'],
-            text_color=theme['text_color'],
-            hover_color=theme['hover_color'],
-            command=self.master.open_main_frame
-        )
-        self.back_to_main_button.place(x=10, y=10)
-
-        self.recipe_data_frame = ctk.CTkFrame(
-            master=self,
-            width=1270,
-            height=620
-        )
-        self.recipe_data_frame.place(relx=0.005, y=70)
-
-        # Поле ввода названия рецепта
-        self.recipe_name_entry = ctk.CTkEntry(
-            master=self.recipe_data_frame,
-            width=200,
-            placeholder_text="Название рецепта",
-            font=('Century Gothic', 12),
-            fg_color=theme['textbox_bg_color'],
-            border_width=0
-        )
-        self.recipe_name_entry.place(x=25, y=10)
-
-        # Поле ввода времени приготовления
-        self.recipe_cocking_time_entry = ctk.CTkEntry(
-            master=self.recipe_data_frame,
-            width=200,
-            placeholder_text="Время приготовления (мин)",
-            font=('Century Gothic', 12),
-            fg_color=theme['textbox_bg_color'],
-            border_width=0
-        )
-        self.recipe_cocking_time_entry.place(x=25, y=50)
-
-        # метка продуктов
-        ctk.CTkLabel(
-            master=self.recipe_data_frame,
-            text="Продкуты: ",
-            font=('Century Gothic', 16),
-        ).place(x=30, y=90)
-
-        # поле для ввода продуктов для рецепта
-        self.recipe_product_textbox = ctk.CTkTextbox(
-            master=self.recipe_data_frame,
-            font=('Century Gothic', 12),
-            corner_radius=12,
-            width=200,
-            height=100,
-            fg_color=theme['textbox_bg_color']
-        )
-        self.recipe_product_textbox.place(x=25, y=130)
-
-        # Фрейм для изображения блюда
-        self.recipe_photo_frame = ctk.CTkFrame(
-            master=self.recipe_data_frame,
-            width=300,
-            height=200,
-            fg_color="white",
-            corner_radius=10,
-            border_width=1,
-            border_color="#e0e0e0"
-        )
-        self.recipe_photo_frame.place(relx=0.5, rely=0.2, anchor=ctk.CENTER)
-
-        # Метка для изображения
-        self.recipe_image_label = ctk.CTkLabel(
-            master=self.recipe_photo_frame,
-            text="Изображение рецепта",
-            width=280,
-            height=180,
-            fg_color="#f5f5f5",
-            corner_radius=8,
-            text_color="gray"
-        )
-        self.recipe_image_label.pack(pady=10)
-
-        self.load_image_button = ctk.CTkButton(
-            master=self.recipe_data_frame,
-            fg_color=theme['frame_background_color'],
-            hover_color=theme['hover_color'],
-            corner_radius=6,
-            font=('Century Gothic', 12),
-            text="Загрузить изображение",
-            command=self.load_image_dialog
-        )
-        self.load_image_button.place(relx=0.5, y=260, anchor=ctk.CENTER)
-
-        # метка описания
-        ctk.CTkLabel(
-            master=self.recipe_data_frame,
-            text="Описание: ",
-            font=('Century Gothic', 16),
-        ).place(x=30, y=260)
-
-        # поле для ввода описания рецепта
-        self.recipe_description_textbox = ctk.CTkTextbox(
-            master=self.recipe_data_frame,
-            font=('Century Gothic', 12),
-            corner_radius=12,
-            width=1220,
-            height=240,
-            fg_color=theme['textbox_bg_color']
-        )
-        self.recipe_description_textbox.place(relx=0.5, y=430, anchor=ctk.CENTER)
-
-        # кнопка подтверждения добавления рецепта
-        self.send_recipe_button = ctk.CTkButton(
-            master=self.recipe_data_frame,
-            text="Отправить",
-            fg_color=theme['frame_background_color'],
-            text_color=theme['text_color'],
-            hover_color=theme['hover_color'],
-            corner_radius=6,
-            font=('Century Gothic', 24),
-            command=self.send_recipe
-        )
-        self.send_recipe_button.place(relx=0.87, y=570)
-
-        if self.recipe:
-            # Изменяем параметры кнопок
-            self.send_recipe_button.configure(text="Сохранить", command=lambda: self.send_recipe(update=True, by_admin=self.admin))
-            self.text.configure(text="Редактирование рецепта")
-
-            # Устанавливаем значения для полей рецепта
-            self.recipe_name_entry.insert(0, self.recipe.name)
-            self.recipe_cocking_time_entry.insert(0, str(self.recipe.cooking_time))
-            self.recipe_description_textbox.insert("1.0", self.recipe.description)
-            self.recipe_product_textbox.insert("1.0", ", ".join(self.recipe.products))
-
-            # Загружаем существующее изображение рецепта
-            self.load_existing_recipe_image()
-
-    # Метод для загрузки изображения уже существующего рецепта
     def load_existing_recipe_image(self):
         try:
             if not self.recipe or not self.recipe.picture_path:
@@ -376,6 +222,171 @@ class AddRecipeFrame(ctk.CTkFrame):
                 text="Ошибка загрузки",
                 text_color="red"
             )
+
+    def setup_add_recipe_frame(self):
+        # Create recipe frame
+        self.header_frame = ctk.CTkFrame(master=self, width=1270, height=50, fg_color=theme['background_color'])
+        self.header_frame.place(relx=0.5, rely=0.05, anchor=ctk.CENTER)
+
+        # top text
+        self.text = ctk.CTkLabel(
+            master=self.header_frame,
+            text="Добавление рецепта",
+            font=('Century Gothic', 36),
+            text_color=theme['text_color']
+        )
+        self.text.place(relx=0.35, rely=0)
+
+        # Кнопка возврата к основному фрейму
+        self.back_to_main_button = ctk.CTkButton(
+            master=self.header_frame,
+            width=100,
+            text="Назад",
+            corner_radius=6,
+            fg_color=theme['frame_background_color'],
+            text_color=theme['text_color'],
+            hover_color=theme['hover_color'],
+            command=self.master.open_main_frame
+        )
+        self.back_to_main_button.place(x=10, y=10)
+
+        self.recipe_data_frame = ctk.CTkFrame(
+            master=self,
+            width=1270,
+            height=620,
+            fg_color=theme['background_color'],
+        )
+        self.recipe_data_frame.place(relx=0.005, y=70)
+
+        # Поле ввода названия рецепта
+        self.recipe_name_entry = ctk.CTkEntry(
+            master=self.recipe_data_frame,
+            width=200,
+            placeholder_text="Название рецепта",
+            font=('Century Gothic', 12),
+            border_width=0,
+            fg_color=theme['frame_background_color'],
+            text_color=theme['text_color'],
+            placeholder_text_color=theme['text_color']
+        )
+        self.recipe_name_entry.place(x=25, y=10)
+
+        # Поле ввода времени приготовления
+        self.recipe_cocking_time_entry = ctk.CTkEntry(
+            master=self.recipe_data_frame,
+            width=200,
+            placeholder_text="Время приготовления (мин)",
+            font=('Century Gothic', 12),
+            border_width=0,
+            fg_color=theme['frame_background_color'],
+            text_color=theme['text_color'],
+            placeholder_text_color=theme['text_color']
+        )
+        self.recipe_cocking_time_entry.place(x=25, y=50)
+
+        # метка продуктов
+        ctk.CTkLabel(
+            master=self.recipe_data_frame,
+            text="Продукты: ",
+            font=('Century Gothic', 16),
+            text_color=theme['text_color'],
+        ).place(x=30, y=90)
+
+        # поле для ввода продуктов для рецепта
+        self.recipe_product_textbox = ctk.CTkTextbox(
+            master=self.recipe_data_frame,
+            font=('Century Gothic', 12),
+            corner_radius=12,
+            width=200,
+            height=100,
+            fg_color=theme['frame_background_color'],
+            text_color=theme['text_color']
+        )
+        self.recipe_product_textbox.place(x=25, y=130)
+
+        # Фрейм для изображения блюда
+        self.recipe_photo_frame = ctk.CTkFrame(
+            master=self.recipe_data_frame,
+            width=300,
+            height=200,
+            fg_color="white",
+            corner_radius=10,
+            border_width=1,
+            border_color="#e0e0e0"
+        )
+        self.recipe_photo_frame.place(relx=0.5, rely=0.2, anchor=ctk.CENTER)
+
+        # Метка для изображения
+        self.recipe_image_label = ctk.CTkLabel(
+            master=self.recipe_photo_frame,
+            text="Изображение рецепта",
+            width=280,
+            height=180,
+            fg_color="#f5f5f5",
+            corner_radius=8,
+            text_color="gray"
+        )
+        self.recipe_image_label.pack(pady=10)
+
+        self.load_image_button = ctk.CTkButton(
+            master=self.recipe_data_frame,
+            fg_color=theme['frame_background_color'],
+            hover_color=theme['hover_color'],
+            text_color=theme['text_color'],
+            corner_radius=6,
+            font=('Century Gothic', 12),
+            text="Загрузить изображение",
+            command=self.load_image_dialog
+        )
+        self.load_image_button.place(relx=0.5, y=260, anchor=ctk.CENTER)
+
+        # метка описания
+        ctk.CTkLabel(
+            master=self.recipe_data_frame,
+            text="Описание: ",
+            font=('Century Gothic', 16),
+            text_color=theme['text_color']
+        ).place(x=30, y=260)
+
+        # поле для ввода описания рецепта
+        self.recipe_description_textbox = ctk.CTkTextbox(
+            master=self.recipe_data_frame,
+            font=('Century Gothic', 12),
+            corner_radius=12,
+            width=1220,
+            height=240,
+            fg_color=theme['frame_background_color'],
+            text_color=theme['text_color']
+        )
+        self.recipe_description_textbox.place(relx=0.5, y=430, anchor=ctk.CENTER)
+
+        # кнопка подтверждения добавления рецепта
+        self.send_recipe_button = ctk.CTkButton(
+            master=self.recipe_data_frame,
+            text="Отправить",
+            corner_radius=6,
+            font=('Century Gothic', 24),
+            command=self.send_recipe,
+            fg_color=theme['frame_background_color'],
+            text_color=theme['text_color'],
+            hover_color=theme['hover_color']
+        )
+        self.send_recipe_button.place(relx=0.87, y=570)
+
+        if self.recipe:
+            # Изменяем параметры кнопок
+            self.send_recipe_button.configure(text="Сохранить", command=lambda: self.send_recipe(update=True, by_admin=self.admin))
+            self.text.configure(text="Редактирование рецепта")
+
+            # Устанавливаем значения для полей рецепта
+            self.recipe_name_entry.insert(0, self.recipe.name)
+            self.recipe_cocking_time_entry.insert(0, str(self.recipe.cooking_time))
+            self.recipe_description_textbox.insert("1.0", self.recipe.description)
+            self.recipe_product_textbox.insert("1.0", ", ".join(self.recipe.products))
+
+            # Загружаем существующее изображение рецепта
+            self.load_existing_recipe_image()
+    # Метод для загрузки изображения уже существующего рецепта
 
     # Метод изменения изображения рецепта с сохранением пропорций
     def resize_image(self, img, max_width, max_height):
