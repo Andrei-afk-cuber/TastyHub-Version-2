@@ -233,9 +233,9 @@ class EditableRecipeCard(ctk.CTkFrame):
     def __init__(self, master, recipe, main_program):
         super().__init__(
             master,
-            fg_color=theme['recipe_card_fg_color'],
+            fg_color=theme['background_color'],
             corner_radius=10,
-            border_width=1,
+            border_width=0,
             border_color="#e0e0e0",
             width=220,
             height=320
@@ -265,6 +265,7 @@ class EditableRecipeCard(ctk.CTkFrame):
             width=180,
             height=120,
             fg_color="transparent",
+            text_color=theme['text_color'],
             corner_radius=8
         )
         self.image_label.grid(row=1, column=0, padx=10, pady=5)
@@ -277,7 +278,8 @@ class EditableRecipeCard(ctk.CTkFrame):
             font=("Arial", 11),
             wraplength=180,
             justify="left",
-            height=60
+            height=60,
+            text_color=theme['text_color'],
         )
         self.desc_label.grid(row=2, column=0, padx=10, pady=5)
 
@@ -287,11 +289,12 @@ class EditableRecipeCard(ctk.CTkFrame):
         self.delete_btn = ctk.CTkButton(
             self.buttons_frame,
             text="Удалить",
-            width=100,
+            width=10,
             height=30,
             fg_color="#db0404",
             hover_color="#910000",
-            text_color="white",
+            # text_color="white",
+            text_color=theme['text_color'],
             command=self.confirm_delete
         )
         self.delete_btn.pack(side="left", padx=5)
@@ -299,9 +302,9 @@ class EditableRecipeCard(ctk.CTkFrame):
         self.edit_btn = ctk.CTkButton(
             self.buttons_frame,
             text="Редактировать",
-            width=100,
+            width=10,
             height=30,
-            fg_color=theme['background_color'],
+            fg_color=theme['frame_background_color'],
             hover_color=theme['hover_color'],
             text_color=theme['text_color'],
             command=lambda: self.main_program.open_edit_recipe_frame(recipe)
