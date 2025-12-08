@@ -4,7 +4,7 @@ from app.config import ICON_PATH, night_theme, day_theme
 
 # Main app window
 class LoginMainApp(tk.CTk):
-    def __init__(self, user_program_class, admin_program_class,):
+    def __init__(self, user_program_class, admin_program_class):
         super().__init__()
         self.theme = day_theme
 
