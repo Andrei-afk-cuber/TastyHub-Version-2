@@ -363,6 +363,7 @@ class EditableRecipeCard(ctk.CTkFrame):
 
 class AdminRecipeCard(ctk.CTkFrame):
     def __init__(self, master, recipe, main_program):
+        self.theme = main_program.theme
         super().__init__(
             master,
             fg_color=self.theme['background_color'],
@@ -513,6 +514,7 @@ class AdminRecipeCard(ctk.CTkFrame):
 
 class UserCard(ctk.CTkFrame):
     def __init__(self, master, user, main_program):
+        self.theme = main_program.theme
         super().__init__(
             master,
             fg_color=self.theme['background_color'],

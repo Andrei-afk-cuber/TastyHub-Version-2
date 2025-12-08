@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from customtkinter import CTkLabel
-from app.config import night_theme as theme
+# from app.config import night_theme as theme
 from app.functions import load_users, load_recipes, AdminRecipeCard, UserCard
 
 # Класс основного фрейма приложения
@@ -8,7 +8,8 @@ class MainFrame(ctk.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
         self.master = master
-        self.configure(fg_color=theme['frame_background_color'])
+        self.theme = master.theme
+        self.configure(fg_color=self.theme['frame_background_color'])
 
         # Загружаем пользователей и рецепты из БД
         self.users = None
@@ -18,7 +19,7 @@ class MainFrame(ctk.CTkFrame):
 
     # Функция для отрисовки основного фрейма
     def setup_main_frame(self):
-        self.main_frame = ctk.CTkFrame(master=self, width=1270, height=50, fg_color=theme['background_color'])
+        self.main_frame = ctk.CTkFrame(master=self, width=1270, height=50, fg_color=self.theme['background_color'])
         self.main_frame.place(relx=0.5, rely=0.05, anchor=ctk.CENTER)
 
         # top text
@@ -35,9 +36,9 @@ class MainFrame(ctk.CTkFrame):
             width=100,
             text="Закрыть",
             corner_radius=6,
-            fg_color=theme['frame_background_color'],
-            text_color=theme['text_color'],
-            hover_color=theme['hover_color'],
+            fg_color=self.theme['frame_background_color'],
+            text_color=self.theme['text_color'],
+            hover_color=self.theme['hover_color'],
             command=self.close_program
         )
         self.exit_button.place(x=1160, y=10)
@@ -48,9 +49,9 @@ class MainFrame(ctk.CTkFrame):
             width=100,
             text="Пользователи",
             corner_radius=6,
-            fg_color=theme['frame_background_color'],
-            text_color=theme['text_color'],
-            hover_color=theme['hover_color'],
+            fg_color=self.theme['frame_background_color'],
+            text_color=self.theme['text_color'],
+            hover_color=self.theme['hover_color'],
             command=self.display_users
         )
         self.users_check_button.place(relx=0.4, y=10)
@@ -60,9 +61,9 @@ class MainFrame(ctk.CTkFrame):
             master=self.main_frame,
             width=100,
             text="Публикации",
-            fg_color=theme['frame_background_color'],
-            text_color=theme['text_color'],
-            hover_color=theme['hover_color'],
+            fg_color=self.theme['frame_background_color'],
+            text_color=self.theme['text_color'],
+            hover_color=self.theme['hover_color'],
             command=self.display_recipes
         )
         self.recipes_check_button.place(relx=0.5, y=10)

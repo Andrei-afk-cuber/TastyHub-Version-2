@@ -3,14 +3,14 @@ import customtkinter as ctk
 from app.windows.admin.admin_frames import MainFrame
 from app.classes import User
 from app.windows.user.user_frames import AddRecipeFrame
-from app.config import ICON_PATH, night_theme as theme
+from app.config import ICON_PATH, night_theme, day_theme
 
 # Основное окно приложения
 class MainApp(ctk.CTk):
-    def __init__(self, user=User(4, 'admin', '0000')):
+    def __init__(self, user=User(4, 'admin', '0000'), theme=day_theme):
         super().__init__()
-
         self.user = user
+        self.theme = theme
 
         self.geometry(f"1280x720+100+100")   # Standard size 600x400
         self.title("TastyHub (Администратор)")

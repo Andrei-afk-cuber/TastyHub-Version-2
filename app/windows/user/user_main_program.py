@@ -8,10 +8,10 @@ from app.config import ICON_PATH, day_theme, night_theme
 class MainApp(ctk.CTk):
     def __init__(self, user=User(0, 'developer', 0000), theme=day_theme):
         super().__init__()
-        self.theme = theme
-        self.configure(fg_color=self.theme['frame_background_color'])
-
         self.user = user
+        self.theme = theme
+
+        self.configure(fg_color=self.theme['frame_background_color'])
 
         self.geometry(f"1280x720+100+100")   # Standard size 600x400
         self.title("TastyHub")
