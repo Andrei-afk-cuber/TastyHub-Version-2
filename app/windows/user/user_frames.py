@@ -44,7 +44,7 @@ class MainFrame(ctk.CTkFrame):
         # Поле ввода для поиска
         self.search_entry = ctk.CTkEntry(
             master=self.main_frame,
-            fg_color="white",
+            fg_color=theme['frame_background_color'],
             corner_radius=6,
             border_width=0,
             text_color=theme['text_color'],

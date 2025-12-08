@@ -1,17 +1,17 @@
 import customtkinter as tk
 from app.windows.login.frames import MainFrame, RegistrationFrame
-from app.config import ICON_PATH, night_theme as theme
+from app.config import ICON_PATH, night_theme, day_theme
 
 # Main app window
 class LoginMainApp(tk.CTk):
     def __init__(self, user_program_class, admin_program_class,):
         super().__init__()
-        self.theme = theme
+        self.theme = day_theme
 
         self.user_program_class = user_program_class
         self.admin_program_class = admin_program_class
 
-        self.configure(fg_color=theme['background_color'])
+        self.configure(fg_color=self.theme['background_color'])
 
         self.geometry(f"600x400+550+250")   # Standard size 600x400
         self.title("Авторизация")
