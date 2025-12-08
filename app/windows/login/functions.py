@@ -3,9 +3,7 @@ import json
 from typing import Optional
 
 from app.windows.login.classes import User
-
-SERVER_HOST = '127.0.0.1'
-SERVER_PORT = 65432
+from app.config import SERVER_HOST, SERVER_PORT
 
 def send_request(request):
     try:

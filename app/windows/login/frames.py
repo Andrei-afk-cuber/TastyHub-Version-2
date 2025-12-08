@@ -1,7 +1,9 @@
 import customtkinter as ctk
 from customtkinter import CTkLabel
-from .functions import toggle_password, check_login, register_user
 from tkinter import messagebox
+
+from .functions import toggle_password, check_login, register_user
+from app.config import night_theme, day_theme
 
 # Класс основного фрейма приложения
 class MainFrame(ctk.CTkFrame):
@@ -101,6 +103,18 @@ class MainFrame(ctk.CTkFrame):
         )
         self.register_button.place(relx=0.5, y=300, anchor=ctk.CENTER)
 
+        self.change_theme_button = ctk.CTkButton(
+            self.login_frame,
+            width=0,
+            corner_radius=6,
+            fg_color=self.theme['background_color'],
+            text_color=self.theme['text_color'],
+            hover_color=self.theme['hover_color'],
+            text='Тема',
+            command=self.change_theme_color
+        )
+        self.change_theme_button.place(relx=0.90, rely=0.06, anchor=ctk.CENTER)
+
     # Функция для проверки пароля и логина
     def check_login_credentials(self):
         # Получаем из полей ввода логин и пароль
@@ -123,6 +137,17 @@ class MainFrame(ctk.CTkFrame):
         else:
             # Неуспешный логин
             self.error_label.configure(text="Неверный логин или пароль")
+
+    # method for change theme color
+    def change_theme_color(self):
+        if self.master.theme == day_theme:
+            self.master.theme = night_theme
+        else:
+            self.master.theme = day_theme
+
+        self.master.configure(fg_color=self.master.theme['background_color'])
+        self.destroy()
+        self.master.open_main_frame()
 
 # Класс фрейма регистрации
 class RegistrationFrame(ctk.CTkFrame):

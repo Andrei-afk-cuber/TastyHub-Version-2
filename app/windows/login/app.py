@@ -13,7 +13,7 @@ class LoginMainApp(tk.CTk):
 
         self.configure(fg_color=self.theme['background_color'])
 
-        self.geometry(f"600x400+550+250")   # Standard size 600x400
+        self.geometry(f"600x400+550+250")
         self.title("Авторизация")
         self.iconbitmap(ICON_PATH)
         # Create the main frame
@@ -23,12 +23,10 @@ class LoginMainApp(tk.CTk):
 
     # Change geometry method
     def change_geometry(self, new_geometry):
-        # Change the window geometry
         self.geometry(new_geometry)
 
     # Change title method
     def change_title(self, new_title):
-        # Change the window title
         self.title(new_title)
 
     # Open register frame method
