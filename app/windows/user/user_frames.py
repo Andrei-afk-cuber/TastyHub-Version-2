@@ -3,7 +3,7 @@ from tkinter import messagebox, filedialog
 from PIL import Image, ImageTk
 import os
 
-from app.config import day_theme as theme
+from app.config import night_theme as theme
 from app.functions import save_recipe, load_recipes, load_products, update_recipe_by_id, EditableRecipeCard
 from app.classes import Recipe, RecipeCard
 

@@ -1,7 +1,7 @@
 import customtkinter as ctk
 from customtkinter import CTkLabel
 from .functions import toggle_password, check_login, register_user
-from app.config import day_theme as theme
+from app.config import night_theme as theme
 from tkinter import messagebox
 
 # Класс основного фрейма приложения

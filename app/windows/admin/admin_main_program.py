@@ -3,7 +3,7 @@ import customtkinter as ctk
 from app.windows.admin.admin_frames import MainFrame
 from app.classes import User
 from app.windows.user.user_frames import AddRecipeFrame
-from app.config import ICON_PATH, day_theme as theme
+from app.config import ICON_PATH, night_theme as theme
 
 # Основное окно приложения
 class MainApp(ctk.CTk):

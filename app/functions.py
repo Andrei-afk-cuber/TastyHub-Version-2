@@ -13,7 +13,7 @@ import io
 
 # from app.classes import Recipe, User
 from app.classes import Recipe
-from app.config import day_theme as theme
+from app.config import night_theme as theme
 from app.models.main import User
 from app.config import SERVER_HOST, SERVER_PORT
 

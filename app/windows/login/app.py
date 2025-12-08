@@ -1,6 +1,6 @@
 import customtkinter as tk
 from app.windows.login.frames import MainFrame, RegistrationFrame
-from app.config import ICON_PATH, day_theme as theme
+from app.config import ICON_PATH, night_theme as theme
 
 # Main app window
 class LoginMainApp(tk.CTk):

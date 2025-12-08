@@ -2,7 +2,7 @@ import customtkinter as ctk
 import os
 from PIL import ImageTk, Image
 
-from app.config import day_theme as theme
+from app.config import night_theme as theme
 
 # user data-class
 class User:
