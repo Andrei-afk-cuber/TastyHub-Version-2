@@ -10,6 +10,7 @@ class MainFrame(ctk.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
         self.master = master
+        self.language = master.language
         self.theme = master.theme
         self.configure(fg_color=self.theme['background_color'])
         self.setup_login_frame()
@@ -41,7 +42,7 @@ class MainFrame(ctk.CTkFrame):
         self.u_block = ctk.CTkEntry(
             master=self.login_frame,
             width=220,
-            placeholder_text="Логин пользователя",
+            placeholder_text=self.language['user_login'],
             border_width=0,
             fg_color=self.theme['textbox_bg_color'],
             placeholder_text_color=self.theme['textbox_text_color'],
@@ -54,7 +55,7 @@ class MainFrame(ctk.CTkFrame):
         self.p_block = ctk.CTkEntry(
             master=self.login_frame,
             width=220,
-            placeholder_text="Пароль",
+            placeholder_text=self.language['password'],
             border_width=0,
             fg_color=self.theme['textbox_bg_color'],
             placeholder_text_color=self.theme['textbox_text_color'],
@@ -66,7 +67,7 @@ class MainFrame(ctk.CTkFrame):
         # галочка для показа пароля
         self.show_password = ctk.CTkCheckBox(
             master=self.login_frame,
-            text="Показать пароль",
+            text=self.language['show_password'],
             font=('Century Gothic', 12),
             border_width=2,
             command=lambda: toggle_password(self.p_block, self.show_password_var),
@@ -81,7 +82,7 @@ class MainFrame(ctk.CTkFrame):
         self.login_button = ctk.CTkButton(
             master=self.login_frame,
             width=120,
-            text="Войти",
+            text=self.language['sign_in'],
             corner_radius=6,
             fg_color=self.theme['button_color'],
             text_color=self.theme['text_color'],
@@ -94,7 +95,7 @@ class MainFrame(ctk.CTkFrame):
         self.register_button = ctk.CTkButton(
             master=self.login_frame,
             width=120,
-            text="Создать аккаунт",
+            text=self.language['sign_up'],
             corner_radius=6,
             fg_color=self.theme['button_color'],
             text_color=self.theme['text_color'],
@@ -110,7 +111,7 @@ class MainFrame(ctk.CTkFrame):
             fg_color=self.theme['background_color'],
             text_color=self.theme['text_color'],
             hover_color=self.theme['hover_color'],
-            text='Тема',
+            text=self.language['theme'],
             command=self.change_theme_color
         )
         self.change_theme_button.place(relx=0.90, rely=0.06, anchor=ctk.CENTER)
@@ -126,17 +127,14 @@ class MainFrame(ctk.CTkFrame):
 
         # Если пользователь был успешно создан
         if user and user.isAuthorized():
-            # Успешный логин
-            print("Успешная авторизация")
             self.master.open_main_program(user)
         # Если пользователь существует, но его аккаунт не подтвержден
         elif user and not user.isAuthorized():
-            messagebox.showinfo("Подождите", "Вы зарегистрировались, но ваш аккаунт ожидает подтверждения"
-                                             " со стороны администрации. Подождите пожалуйста:).")
+            messagebox.showinfo(self.language['wait'], self.language['user_is_not_confirmed_message'])
         # Пользователь не существует
         else:
             # Неуспешный логин
-            self.error_label.configure(text="Неверный логин или пароль")
+            self.error_label.configure(text=self.language['Неверный логин или пароль'])
 
     # method for change theme color
     def change_theme_color(self):
@@ -154,6 +152,7 @@ class RegistrationFrame(ctk.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
         self.master = master
+        self.language = master.language
         self.theme = master.theme
 
         self.configure(fg_color=self.theme['background_color'])
@@ -161,7 +160,7 @@ class RegistrationFrame(ctk.CTkFrame):
 
     # Метод отрисовки фрейма регистрации
     def setup_register_frame(self):
-        self.master.change_title("Регистрация")
+        self.master.change_title(self.master.language['registration'])
         # Create the registration frame
         self.registration_frame = ctk.CTkFrame(
             master=self,
@@ -174,7 +173,7 @@ class RegistrationFrame(ctk.CTkFrame):
         # Верхний текст
         self.text = CTkLabel(
             master=self.registration_frame,
-            text="Добро пожаловать в\n TestyHub",
+            text=self.language['welcome'],
             font=('Century Gothic', 25),
             text_color=self.theme['text_color'],
         )
@@ -184,7 +183,7 @@ class RegistrationFrame(ctk.CTkFrame):
             master=self,
             width=30,
             height=30,
-            text="Назад",
+            text=self.language['back'],
             corner_radius=6,
             fg_color=self.theme['frame_background_color'],
             text_color=self.theme['text_color'],
@@ -198,7 +197,7 @@ class RegistrationFrame(ctk.CTkFrame):
             master=self.registration_frame,
             width=220,
             border_width=0,
-            placeholder_text="Логин",
+            placeholder_text=self.language['username'],
             placeholder_text_color=self.theme['textbox_text_color'],
             text_color=self.theme['textbox_text_color'],
             fg_color=self.theme['background_color'],
@@ -210,7 +209,7 @@ class RegistrationFrame(ctk.CTkFrame):
         self.p_block = ctk.CTkEntry(
             master=self.registration_frame,
             width=220,
-            placeholder_text="Пароль",
+            placeholder_text=self.language['password'],
             show="*",
             border_width=0,
             placeholder_text_color=self.theme['textbox_text_color'],
@@ -222,7 +221,7 @@ class RegistrationFrame(ctk.CTkFrame):
         # Галочка показа пароля
         self.show_password = ctk.CTkCheckBox(
             master=self.registration_frame,
-            text="Показать пароль",
+            text=self.language['show_password'],
             font=('Century Gothic', 12),
             border_width=2,
             command=lambda: toggle_password(self.p_block, self.show_password_var),
@@ -236,7 +235,7 @@ class RegistrationFrame(ctk.CTkFrame):
         self.register_button = ctk.CTkButton(
             master=self.registration_frame,
             width=120,
-            text="Зарегистрироваться",
+            text=self.language['sign_up'],
             corner_radius=6,
             fg_color=self.theme['button_color'],
             text_color=self.theme['text_color'],
@@ -251,19 +250,14 @@ class RegistrationFrame(ctk.CTkFrame):
         password = self.p_block.get()
 
         if not username or not password:
-            print("Пожалуйста, заполните поля ввода логина и пароля")
-            messagebox.showerror("Ошибка", "Заполните поля логина и пароля")
+            messagebox.showerror(self.language['error'], self.language['not_all_fields_are_filled_in_error'])
             return
 
         if register_user(username, password):
-            # Успешная регистрация
-            print("Пользователь успешно зарегистрировался")
-            messagebox.showinfo("Поздравляем", "Регистрация прошла успешно")
+            messagebox.showinfo(self.language['success'], self.language['successful_registration_message'])
             self.registration_frame.place_forget()
             self.master.open_main_frame()
             return
         else:
-            # В случае, если пользователь с таким логином уже зарегистрирован
-            print("Логин уже используется")
-            messagebox.showerror("Ошибка", "Этот логин уже занят, используйте другой")
+            messagebox.showerror(self.language['error'], self.language['login_is_taken_error'])
             return

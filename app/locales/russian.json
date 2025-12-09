@@ -5,9 +5,11 @@
   "theme": "Тема",
   "user_login": "Логин пользователя",
   "password": "Пароль",
+  "username": "Логин",
   "show_password": "Показать пароль",
   "sign_in": "Войти",
   "sign_up": "Создать аккаунт",
+  "welcome": "Добро пожаловать\nна TastyHub",
   "back": "Назад",
   "incorrect_password_error": "Неверный логин или пароль",
   "login_is_taken_error": "Этот логин уже занят, используйте другой",
@@ -39,5 +41,7 @@
   "recipe_editing": "Редактирование рецепта",
   "save": "Сохранить",
   "look": "Смотреть",
-  "minutes": "мин."
+  "minutes": "мин.",
+  "authorization": "Авторизация",
+  "registration": "Регистрация"
 }

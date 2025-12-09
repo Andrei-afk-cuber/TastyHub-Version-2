@@ -5,9 +5,11 @@
   "theme": "Theme",
   "user_login": "User login",
   "password": "Password",
+  "username": "Username",
   "show_password": "Show password",
   "sign_in": "Sign in",
   "sign_up": "Create account",
+  "welcome": "Welcome to\nTastyHub",
   "back": "Back",
   "incorrect_password_error": "Incorrect login or password",
   "login_is_taken_error": "This login is already taken, please use another one",
@@ -39,5 +41,7 @@
   "recipe_editing": "Recipe editing",
   "save": "Save",
   "look": "View",
-  "minutes": "min."
+  "minutes": "min.",
+  "authorization": "Authorization",
+  "registration": "Registration"
 }
