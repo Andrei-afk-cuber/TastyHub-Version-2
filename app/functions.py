@@ -229,6 +229,12 @@ def delete_user(user):
     })
     return response.get("status") == "success"
 
+def json_to_dict(filename):
+    with open(filename, encoding="utf-8") as json_file:
+        data = json.load(json_file)
+
+    return data
+
 class EditableRecipeCard(ctk.CTkFrame):
     def __init__(self, master, recipe, main_program):
         self.theme = main_program.theme
