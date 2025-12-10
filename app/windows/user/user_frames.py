@@ -13,6 +13,7 @@ class MainFrame(ctk.CTkFrame):
         super().__init__(master)
         self.master = master
         self.theme = master.theme
+        self.language = master.language
         self.configure(fg_color=self.theme['frame_background_color'])
         # Загружаем рецепты
         self.recipes = load_recipes()
@@ -32,7 +33,7 @@ class MainFrame(ctk.CTkFrame):
         self.exit_button = ctk.CTkButton(
             master=self.main_frame,
             width=100,
-            text="Закрыть",
+            text=self.language['close'],
             corner_radius=6,
             fg_color=self.theme['frame_background_color'],
             text_color=self.theme['text_color'],
@@ -61,7 +62,7 @@ class MainFrame(ctk.CTkFrame):
             master=self.main_frame,
             width=100,
             height=40,
-            text="Поиск",
+            text=self.language['search'],
             corner_radius=6,
             fg_color=self.theme['frame_background_color'],
             text_color=self.theme['text_color'],
@@ -74,7 +75,7 @@ class MainFrame(ctk.CTkFrame):
         self.add_recipe_button = ctk.CTkButton(
             master=self.main_frame,
             width=100,
-            text="Добавить рецепт",
+            text=self.language['add_recipe'],
             corner_radius=6,
             fg_color=self.theme['frame_background_color'],
             text_color=self.theme['text_color'],
@@ -87,7 +88,7 @@ class MainFrame(ctk.CTkFrame):
         self.user_profile_button = ctk.CTkButton(
             master=self.main_frame,
             width=100,
-            text="Мои публикации",
+            text=self.language['my_posts'],
             corner_radius=6,
             fg_color=self.theme['frame_background_color'],
             text_color=self.theme['text_color'],
@@ -98,7 +99,7 @@ class MainFrame(ctk.CTkFrame):
 
         search_by_name = ctk.CTkRadioButton(
             master=self.main_frame,
-            text="По имени",
+            text=self.language['by_name'],
             value="name",
             variable=self.radiobutton_variable,
             fg_color='white',
@@ -109,7 +110,7 @@ class MainFrame(ctk.CTkFrame):
 
         search_by_ingredients = ctk.CTkRadioButton(
             master=self.main_frame,
-            text="По ингредиентам",
+            text=self.language['by_products'],
             value="ingredients",
             variable=self.radiobutton_variable,
             fg_color='white',
@@ -165,11 +166,9 @@ class MainFrame(ctk.CTkFrame):
             return
 
         if self.radiobutton_variable.get() == "name":
-            print("Поиск по названию рецепта")
             search_request = self.search_entry.get().strip().lower()
             self.display_recipes(by_name=search_request)
         elif self.radiobutton_variable.get() == "ingredients":
-            print("Поиск по ингредиентам")
             search_request = self.search_entry.get().strip().lower()
             search_request = [product.strip().lower() for product in self.search_entry.get().split(',')]
             self.display_recipes(by_ingredients=search_request)
@@ -177,9 +176,9 @@ class MainFrame(ctk.CTkFrame):
 class AddRecipeFrame(ctk.CTkFrame):
     def __init__(self, master, recipe=None, admin=False):
         super().__init__(master)
-        
         self.master = master
         self.theme = master.theme
+        self.language = master.language
         self.recipe = recipe
         self.admin = admin
         self.selected_image_path = None
@@ -214,13 +213,13 @@ class AddRecipeFrame(ctk.CTkFrame):
                 )
             else:
                 self.recipe_image_label.configure(
-                    text="Изображение не найдено",
+                    text=self.language['image_is_not_found_error'],
                     text_color="red"
                 )
         except Exception as e:
             print(f"Ошибка загрузки изображения: {e}")
             self.recipe_image_label.configure(
-                text="Ошибка загрузки",
+                text=self.language['load_image_error'],
                 text_color="red"
             )
 
@@ -232,7 +231,7 @@ class AddRecipeFrame(ctk.CTkFrame):
         # top text
         self.text = ctk.CTkLabel(
             master=self.header_frame,
-            text="Добавление рецепта",
+            text=self.language['adding_recipe'],
             font=('Century Gothic', 36),
             text_color=self.theme['text_color']
         )
@@ -242,7 +241,7 @@ class AddRecipeFrame(ctk.CTkFrame):
         self.back_to_main_button = ctk.CTkButton(
             master=self.header_frame,
             width=100,
-            text="Назад",
+            text=self.language['back'],
             corner_radius=6,
             fg_color=self.theme['frame_background_color'],
             text_color=self.theme['text_color'],
@@ -263,7 +262,7 @@ class AddRecipeFrame(ctk.CTkFrame):
         self.recipe_name_entry = ctk.CTkEntry(
             master=self.recipe_data_frame,
             width=200,
-            placeholder_text="Название рецепта",
+            placeholder_text=self.language['recipe_name'],
             font=('Century Gothic', 12),
             border_width=0,
             fg_color=self.theme['frame_background_color'],
@@ -276,7 +275,7 @@ class AddRecipeFrame(ctk.CTkFrame):
         self.recipe_cocking_time_entry = ctk.CTkEntry(
             master=self.recipe_data_frame,
             width=200,
-            placeholder_text="Время приготовления (мин)",
+            placeholder_text=self.language['cooking_time'],
             font=('Century Gothic', 12),
             border_width=0,
             fg_color=self.theme['frame_background_color'],
@@ -288,7 +287,7 @@ class AddRecipeFrame(ctk.CTkFrame):
         # метка продуктов
         ctk.CTkLabel(
             master=self.recipe_data_frame,
-            text="Продукты: ",
+            text=self.language['products'],
             font=('Century Gothic', 16),
             text_color=self.theme['text_color'],
         ).place(x=30, y=90)
@@ -320,7 +319,7 @@ class AddRecipeFrame(ctk.CTkFrame):
         # Метка для изображения
         self.recipe_image_label = ctk.CTkLabel(
             master=self.recipe_photo_frame,
-            text="Изображение рецепта",
+            text=self.language['recipe_image'],
             width=280,
             height=180,
             fg_color="#f5f5f5",
@@ -336,7 +335,7 @@ class AddRecipeFrame(ctk.CTkFrame):
             text_color=self.theme['text_color'],
             corner_radius=6,
             font=('Century Gothic', 12),
-            text="Загрузить изображение",
+            text=self.language['load_image'],
             command=self.load_image_dialog
         )
         self.load_image_button.place(relx=0.5, y=260, anchor=ctk.CENTER)
@@ -344,7 +343,7 @@ class AddRecipeFrame(ctk.CTkFrame):
         # метка описания
         ctk.CTkLabel(
             master=self.recipe_data_frame,
-            text="Описание: ",
+            text=self.language['description'],
             font=('Century Gothic', 16),
             text_color=self.theme['text_color']
         ).place(x=30, y=260)
@@ -364,7 +363,7 @@ class AddRecipeFrame(ctk.CTkFrame):
         # кнопка подтверждения добавления рецепта
         self.send_recipe_button = ctk.CTkButton(
             master=self.recipe_data_frame,
-            text="Отправить",
+            text=self.language['send'],
             corner_radius=6,
             font=('Century Gothic', 24),
             command=self.send_recipe,
@@ -376,8 +375,8 @@ class AddRecipeFrame(ctk.CTkFrame):
 
         if self.recipe:
             # Изменяем параметры кнопок
-            self.send_recipe_button.configure(text="Сохранить", command=lambda: self.send_recipe(update=True, by_admin=self.admin))
-            self.text.configure(text="Редактирование рецепта")
+            self.send_recipe_button.configure(text=self.language['save'], command=lambda: self.send_recipe(update=True, by_admin=self.admin))
+            self.text.configure(text=self.language['recipe_editing'])
 
             # Устанавливаем значения для полей рецепта
             self.recipe_name_entry.insert(0, self.recipe.name)
@@ -413,14 +412,14 @@ class AddRecipeFrame(ctk.CTkFrame):
         try:
             cooking_time = int(self.recipe_cocking_time_entry.get().strip())
         except ValueError:
-            messagebox.showerror("Ошибка", "Время приготовления должно быть целым числом")
+            messagebox.showerror(self.language['error'], self.language['incorrect_cooking_time_error'])
 
         products = self.recipe_product_textbox.get('1.0', 'end').strip()
         description = self.recipe_description_textbox.get('1.0', 'end').strip()
         try:
             picture_path = self.selected_image_path
         except:
-            messagebox.showerror("Ошибка", "Выберите картинку для рецепта")
+            messagebox.showerror(self.language['error'], self.language['image_is_not_found_error'])
 
 
         if name and cooking_time and products and description and picture_path:
@@ -451,9 +450,7 @@ class AddRecipeFrame(ctk.CTkFrame):
 
             return
         else:
-            messagebox.showerror("Ошибка", "Вы не заполнили все поля")
-
-        print("Вы отправили рецепт")
+            messagebox.showerror(self.language['error'], self.language['not_all_fields_are_filled_in_error'])
 
     def load_image_dialog(self):
         file_path = filedialog.askopenfilename(
@@ -474,13 +471,14 @@ class AddRecipeFrame(ctk.CTkFrame):
                     text=""
                 )
             except Exception as e:
-                messagebox.showerror("Ошибка", f"Не удалось загрузить изображение: {str(e)}")
+                messagebox.showerror(self.language['error'], f"{self.language['load_image_error']}: {str(e)}")
 
 class ShowRecipeFrame(ctk.CTkFrame):
     def __init__(self, master, recipe):
         super().__init__(master)
         self.master = master
         self.theme = master.theme
+        self.language = master.language
         self.recipe = recipe
 
         self.configure(fg_color=self.theme['frame_background_color'])
@@ -500,7 +498,7 @@ class ShowRecipeFrame(ctk.CTkFrame):
         self.back_to_main = ctk.CTkButton(
             master=self.show_recipe_frame,
             width=100,
-            text="Назад",
+            text=self.language['back'],
             corner_radius=6,
             fg_color=self.theme['background_color'],
             text_color=self.theme['text_color'],
@@ -537,7 +535,7 @@ class ShowRecipeFrame(ctk.CTkFrame):
         # Заголовок ингредиентов
         ctk.CTkLabel(
             master=self,
-            text="Ингредиенты:",
+            text=self.language['products'],
             font=('Century Gothic', 24, 'bold'),
             text_color="orange"
         ).place(relx=0.08, rely=0.15, anchor=ctk.CENTER)
@@ -612,12 +610,11 @@ class ShowRecipeFrame(ctk.CTkFrame):
                 )
             else:
                 self.image_label.configure(
-                    text="Изображение не найдено",
+                    text=self.language['image_is_not_found_error'],
                 )
         except Exception as e:
-            print(f"Ошибка загрузки изображения: {e}")
             self.image_label.configure(
-                text="Ошибка загрузки",
+                text=self.language['load_image_error'] + str(e),
                 font=('Century Gothic', 14),
                 text_color="red"
             )
@@ -627,6 +624,7 @@ class UserProfileFrame(ctk.CTkFrame):
         super().__init__(master)
         self.master = master
         self.theme = master.theme
+        self.language = master.language
         self.recipes = load_recipes(by_name=self.master.user.username, only_confirmed=False)
 
         self.configure(fg_color=self.theme['frame_background_color'])
@@ -641,7 +639,7 @@ class UserProfileFrame(ctk.CTkFrame):
         self.back_to_main_button = ctk.CTkButton(
             master=self.header_frame,
             width=100,
-            text="Назад",
+            text=self.language['back'],
             corner_radius=6,
             fg_color=self.theme['frame_background_color'],
             text_color=self.theme['text_color'],
@@ -652,14 +650,14 @@ class UserProfileFrame(ctk.CTkFrame):
 
         ctk.CTkLabel(
             master=self.header_frame,
-            text=f"Профиль пользователя {self.master.user.username}",
+            text=self.language['user_profile'] + self.master.user.username,
             font=('Century Gothic', 24),
             text_color=self.theme['text_color'],
         ).place(relx=0.5, rely=0.5, anchor=ctk.CENTER)
 
         ctk.CTkLabel(
             master=self,
-            text="Ваши посты",
+            text=self.language['your_posts'],
             font=('Century Gothic', 24, 'bold'),
             text_color=self.theme['text_color'],
         ).place(relx=0.5, rely=0.1, anchor=ctk.CENTER)

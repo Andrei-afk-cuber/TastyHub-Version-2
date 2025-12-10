@@ -6,10 +6,11 @@ from app.config import ICON_PATH, day_theme, night_theme
 
 # Основное окно приложения
 class MainApp(ctk.CTk):
-    def __init__(self, user=User(0, 'developer', 0000), theme=day_theme):
+    def __init__(self, language, user=User(0, 'developer', 0000), theme=day_theme):
         super().__init__()
         self.user = user
         self.theme = theme
+        self.language = language
 
         self.configure(fg_color=self.theme['frame_background_color'])
 

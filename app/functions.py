@@ -238,6 +238,7 @@ def json_to_dict(filename):
 class EditableRecipeCard(ctk.CTkFrame):
     def __init__(self, master, recipe, main_program):
         self.theme = main_program.theme
+        self.language = main_program.language
         super().__init__(
             master,
             fg_color=self.theme['background_color'],
@@ -295,7 +296,7 @@ class EditableRecipeCard(ctk.CTkFrame):
 
         self.delete_btn = ctk.CTkButton(
             self.buttons_frame,
-            text="Удалить",
+            text=self.language['delete'],
             width=10,
             height=30,
             fg_color="#db0404",
@@ -308,8 +309,8 @@ class EditableRecipeCard(ctk.CTkFrame):
 
         self.edit_btn = ctk.CTkButton(
             self.buttons_frame,
-            text="Редактировать",
-            width=10,
+            text=self.language['edit'],
+            width=100,
             height=30,
             fg_color=self.theme['frame_background_color'],
             hover_color=self.theme['hover_color'],
@@ -332,22 +333,22 @@ class EditableRecipeCard(ctk.CTkFrame):
                 self.image_label.configure(image=self.ctk_image, text="")
             else:
                 self.image_label.configure(
-                    text="Изображение не найдено",
+                    text=self.language['image_is_not_found_error'],
                     font=('Century Gothic', 12),
                     text_color="gray"
                 )
         except Exception as e:
-            print(f"Ошибка загрузки изображения: {e}")
+            print(self.language['load_image_error'] + ': ' + str(e))
             self.image_label.configure(
-                text="Ошибка загрузки",
+                text=self.language['load_image_error'],
                 font=('Century Gothic', 12),
                 text_color="red"
             )
 
     def confirm_delete(self):
         answer = messagebox.askyesno(
-            "Подтверждение удаления",
-            f"Вы уверены, что хотите удалить рецепт '{self.recipe.name}'?",
+            self.language['accepting'],
+            self.language['delete_recipe_accept'] + self.recipe.name,
             parent=self
         )
         if answer:
@@ -358,7 +359,7 @@ class EditableRecipeCard(ctk.CTkFrame):
                 elif hasattr(self.main_program, 'main_frame'):
                     self.main_program.main_frame.display_recipes()
             else:
-                messagebox.showerror("Ошибка", "Не удалось удалить рецепт", parent=self)
+                messagebox.showerror(self.language['error'], self.language['delete_recipe_error'], parent=self)
 
     def delete_recipe(self):
         response = send_request({
@@ -370,6 +371,7 @@ class EditableRecipeCard(ctk.CTkFrame):
 class AdminRecipeCard(ctk.CTkFrame):
     def __init__(self, master, recipe, main_program):
         self.theme = main_program.theme
+        self.language = main_program.language
         super().__init__(
             master,
             fg_color=self.theme['background_color'],
@@ -421,7 +423,7 @@ class AdminRecipeCard(ctk.CTkFrame):
 
         self.delete_btn = ctk.CTkButton(
             master=self,
-            text="Удалить",
+            text=self.language['delete'],
             width=120,
             height=30,
             fg_color="#db0404",
@@ -432,7 +434,7 @@ class AdminRecipeCard(ctk.CTkFrame):
 
         self.edit_btn = ctk.CTkButton(
             master=self,
-            text="Редактировать",
+            text=self.language[''],
             width=120,
             height=30,
             fg_color=self.theme['frame_background_color'],
@@ -444,7 +446,7 @@ class AdminRecipeCard(ctk.CTkFrame):
 
         if not self.recipe.confirmed:
             self.edit_btn.configure(
-                text="Одобрить",
+                text=self.language['confirm'],
                 fg_color="#17ad03",
                 hover_color="#0c5c02",
             )
@@ -463,22 +465,21 @@ class AdminRecipeCard(ctk.CTkFrame):
                 self.image_label.configure(image=self.ctk_image, text="")
             else:
                 self.image_label.configure(
-                    text="Изображение не найдено",
+                    text=self.language['image_is_not_found_error'],
                     font=('Century Gothic', 12),
                     text_color="gray"
                 )
         except Exception as e:
-            print(f"Ошибка загрузки изображения: {e}")
             self.image_label.configure(
-                text="Ошибка загрузки",
+                text=self.language['load_image_error'] + str(e),
                 font=('Century Gothic', 12),
                 text_color="red"
             )
 
     def confirm_delete(self):
         answer = messagebox.askyesno(
-            "Подтверждение удаления",
-            f"Вы уверены, что хотите удалить рецепт '{self.recipe.name}'?",
+            self.language['accepting'],
+            self.language['delete_recipe_accept'] + self.recipe.name,
             parent=self
         )
         if answer:
@@ -489,7 +490,7 @@ class AdminRecipeCard(ctk.CTkFrame):
                 elif hasattr(self.main_program, 'main_frame'):
                     self.main_program.main_frame.display_recipes()
             else:
-                messagebox.showerror("Ошибка", "Не удалось удалить рецепт", parent=self)
+                messagebox.showerror(self.lanugage['error'], self.language['delete_recipe_error'], parent=self)
 
     def delete_recipe(self):
         try:
@@ -510,10 +511,10 @@ class AdminRecipeCard(ctk.CTkFrame):
                     try:
                         os.remove(image_path)
                     except Exception as e:
-                        print(f"Не удалось удалить изображение: {e}")
-            messagebox.showinfo("Успех", "Рецепт успешно удален.", parent=self)
+                        print(str(e))
+            messagebox.showinfo(self.language['success'], self.language['recipe_delete_successful'], parent=self)
         except Exception as e:
-            messagebox.showerror("Ошибка", f"Не удалось удалить рецепт: {str(e)}", parent=self)
+            messagebox.showerror(self.language['error'], self.language['delete_recipe_error'] + ' : ' + str(e), parent=self)
         finally:
             close_database_connection(db)
             self.main_program.main_frame.display_recipes()
@@ -521,6 +522,7 @@ class AdminRecipeCard(ctk.CTkFrame):
 class UserCard(ctk.CTkFrame):
     def __init__(self, master, user, main_program):
         self.theme = main_program.theme
+        self.language = main_program.language
         super().__init__(
             master,
             fg_color=self.theme['background_color'],
@@ -550,7 +552,7 @@ class UserCard(ctk.CTkFrame):
 
         self.delete_user_button = ctk.CTkButton(
             master=self,
-            text="Удалить",
+            text=self.language['delete'],
             corner_radius=6,
             width=100,
             fg_color="#db0404",
@@ -562,7 +564,7 @@ class UserCard(ctk.CTkFrame):
         if not user.authorized:
             self.accept_user_button = ctk.CTkButton(
                 master=self,
-                text="Одобрить",
+                text=self.language['accept'],
                 corner_radius=6,
                 width=100,
                 fg_color="#17ad03",
@@ -574,7 +576,7 @@ class UserCard(ctk.CTkFrame):
         if not user.admin:
             self.set_admin_button = ctk.CTkButton(
                 master=self,
-                text="Сделать админом",
+                text=self.language['grant_admin_privileges'],
                 corner_radius=6,
                 width=200,
                 command=self.confirm_user_admin
@@ -583,8 +585,8 @@ class UserCard(ctk.CTkFrame):
 
     def confirm_user_confirm(self):
         answer = messagebox.askyesno(
-            "Подтверждение верификации",
-            f"Вы уверены, что хотите подтвердить пользователя '{self.user.username}'?",
+            self.language['verification_confirmation'],
+            self.language['accept_verification'],
             parent=self
         )
         if answer:
@@ -593,8 +595,8 @@ class UserCard(ctk.CTkFrame):
 
     def confirm_user_admin(self):
         answer = messagebox.askyesno(
-            "Подтверждение админки",
-            f"Вы уверены, что хотите выдать пользователю '{self.user.username}' права администратора?",
+            self.language['accepting'],
+            self.language['admin_confirmation'],
         )
         if answer:
             grant_admin_privileges(self.user)
@@ -602,8 +604,8 @@ class UserCard(ctk.CTkFrame):
 
     def confirm_user_delete(self):
         answer = messagebox.askyesno(
-            "Подтверждение удаления",
-            f"Вы уверены, что хотите удалить пользователя '{self.user.username}'?",
+            self.language['accepting'],
+            self.language['user_deleting_confirmation'],
             parent=self
         )
         if answer:

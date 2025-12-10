@@ -134,7 +134,7 @@ class MainFrame(ctk.CTkFrame):
         # Пользователь не существует
         else:
             # Неуспешный логин
-            self.error_label.configure(text=self.language['Неверный логин или пароль'])
+            self.error_label.configure(text=self.language['incorrect_password_error'])
 
     # method for change theme color
     def change_theme_color(self):

@@ -9,7 +9,7 @@ class LoginMainApp(tk.CTk):
     def __init__(self, user_program_class, admin_program_class):
         super().__init__()
         self.theme = day_theme
-        self.language = json_to_dict("app/locales/russian.json")
+        self.language = json_to_dict("app/locales/english.json")
 
         self.user_program_class = user_program_class
         self.admin_program_class = admin_program_class
@@ -52,9 +52,9 @@ class LoginMainApp(tk.CTk):
     def open_main_program(self, user):
         self.destroy()
         if user.admin():
-            self.main_program = self.admin_program_class(user, self.theme)
+            self.main_program = self.admin_program_class(self.language ,user, self.theme)
         else:
-            self.main_program = self.user_program_class(user, self.theme)
+            self.main_program = self.user_program_class(self.language, user, self.theme)
 
         self.main_program.mainloop()
 
