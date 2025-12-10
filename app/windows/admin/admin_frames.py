@@ -9,6 +9,7 @@ class MainFrame(ctk.CTkFrame):
         super().__init__(master)
         self.master = master
         self.theme = master.theme
+        self.language = master.language
         self.configure(fg_color=self.theme['frame_background_color'])
 
         # Загружаем пользователей и рецепты из БД
@@ -34,7 +35,7 @@ class MainFrame(ctk.CTkFrame):
         self.exit_button = ctk.CTkButton(
             master=self.main_frame,
             width=100,
-            text="Закрыть",
+            text=self.language['close'],
             corner_radius=6,
             fg_color=self.theme['frame_background_color'],
             text_color=self.theme['text_color'],
@@ -47,7 +48,7 @@ class MainFrame(ctk.CTkFrame):
         self.users_check_button = ctk.CTkButton(
             master=self.main_frame,
             width=100,
-            text="Пользователи",
+            text=self.language['users'],
             corner_radius=6,
             fg_color=self.theme['frame_background_color'],
             text_color=self.theme['text_color'],
@@ -60,7 +61,7 @@ class MainFrame(ctk.CTkFrame):
         self.recipes_check_button = ctk.CTkButton(
             master=self.main_frame,
             width=100,
-            text="Публикации",
+            text=self.language['posts'],
             fg_color=self.theme['frame_background_color'],
             text_color=self.theme['text_color'],
             hover_color=self.theme['hover_color'],

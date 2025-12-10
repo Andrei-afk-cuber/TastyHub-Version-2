@@ -7,13 +7,14 @@ from app.config import ICON_PATH, night_theme, day_theme
 
 # Основное окно приложения
 class MainApp(ctk.CTk):
-    def __init__(self, user=User(4, 'admin', '0000'), theme=day_theme):
+    def __init__(self, language, user=User(4, 'admin', '0000'), theme=day_theme):
         super().__init__()
         self.user = user
         self.theme = theme
+        self.language = language
 
         self.geometry(f"1280x720+100+100")   # Standard size 600x400
-        self.title("TastyHub (Администратор)")
+        self.title(f"TastyHub {self.language['administrator']}")
         self.iconbitmap(ICON_PATH)
         self.resizable(False, False)
         self.configure(fg_color=theme['frame_background_color'])

@@ -4,6 +4,7 @@ from tkinter import messagebox
 
 from .functions import toggle_password, check_login, register_user
 from app.config import night_theme, day_theme
+from app.functions import json_to_dict
 
 # Класс основного фрейма приложения
 class MainFrame(ctk.CTkFrame):
@@ -104,6 +105,7 @@ class MainFrame(ctk.CTkFrame):
         )
         self.register_button.place(relx=0.5, y=300, anchor=ctk.CENTER)
 
+        # button for change color theme
         self.change_theme_button = ctk.CTkButton(
             self.login_frame,
             width=0,
@@ -115,6 +117,18 @@ class MainFrame(ctk.CTkFrame):
             command=self.change_theme_color
         )
         self.change_theme_button.place(relx=0.90, rely=0.06, anchor=ctk.CENTER)
+
+        # button for change language
+        self.change_language_button = ctk.CTkButton(
+            self.login_frame,
+            width=65,
+            text=self.language['language'],
+            fg_color=self.theme['background_color'],
+            text_color=self.theme['text_color'],
+            hover_color=self.theme['hover_color'],
+            command=lambda: self.change_language(self.language['language'])
+        )
+        self.change_language_button.place(relx=0.12, rely=0.06, anchor=ctk.CENTER)
 
     # Функция для проверки пароля и логина
     def check_login_credentials(self):
@@ -144,6 +158,18 @@ class MainFrame(ctk.CTkFrame):
             self.master.theme = day_theme
 
         self.master.configure(fg_color=self.master.theme['background_color'])
+        self.destroy()
+        self.master.open_main_frame()
+
+    # method for change language
+    def change_language(self, language):
+        if language == 'Русский':
+            new_language = json_to_dict("app/locales/english.json")
+            self.master.language = new_language
+        else:
+            new_language = json_to_dict("app/locales/russian.json")
+            self.master.language = new_language
+
         self.destroy()
         self.master.open_main_frame()
 

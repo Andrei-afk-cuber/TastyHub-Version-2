@@ -109,6 +109,7 @@ class Recipe:
 class RecipeCard(ctk.CTkFrame):
     def __init__(self, master, recipe, main_program):
         self.theme = main_program.theme
+        self.language = main_program.language
         super().__init__(
             master,
             fg_color=self.theme['background_color'],
@@ -164,7 +165,7 @@ class RecipeCard(ctk.CTkFrame):
         # Кнопка "Подробнее"
         self.detail_btn = ctk.CTkButton(
             self,
-            text="Подробнее",
+            text=self.language['look'],
             width=120,
             height=30,
             fg_color=self.theme['frame_background_color'],
@@ -204,12 +205,11 @@ class RecipeCard(ctk.CTkFrame):
                 )
             else:
                 self.image_label.configure(
-                    text="Изображение не найдено",
+                    text=self.language['image_is_not_found_error'],
                 )
         except Exception as e:
-            print(f"Ошибка загрузки изображения: {e}")
             self.image_label.configure(
-                text="Ошибка загрузки",
+                text=self.language['load_image_error'],
                 font=('Century Gothic', 14),
                 text_color="red"
             )

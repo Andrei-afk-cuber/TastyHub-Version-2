@@ -434,7 +434,7 @@ class AdminRecipeCard(ctk.CTkFrame):
 
         self.edit_btn = ctk.CTkButton(
             master=self,
-            text=self.language[''],
+            text=self.language['edit'],
             width=120,
             height=30,
             fg_color=self.theme['frame_background_color'],

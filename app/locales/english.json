@@ -1,4 +1,6 @@
 {
+  "language": "English",
+  "administrator": "Admin",
   "error": "Error",
   "success": "Success",
   "wait": "Please wait",
@@ -52,5 +54,8 @@
   "delete_recipe_accept": "Are you sure you want to delete recipe?",
   "delete_recipe_error": "Failed to delete recipe",
   "recipe_delete_successful": "Recipe was successfully deleted",
-  "verification_confirmation": "Verification confirmation"
+  "verification_confirmation": "Verification confirmation",
+  "user_deleting_confirmation": "Are you sure you want to delete user?",
+  "accept_verification": "Are you sure you want to cofirm user?",
+  "admin_confirmation": "Are you sure you want grant admin privileges to this user?"
 }

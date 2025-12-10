@@ -9,7 +9,7 @@ class LoginMainApp(tk.CTk):
     def __init__(self, user_program_class, admin_program_class):
         super().__init__()
         self.theme = day_theme
-        self.language = json_to_dict("app/locales/english.json")
+        self.language = json_to_dict("app/locales/russian.json")
 
         self.user_program_class = user_program_class
         self.admin_program_class = admin_program_class
